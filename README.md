@@ -8,6 +8,6 @@ Project has been created with [create-react-app-typescript](https://github.com/w
 npm install -g create-react-app
 
 create-react-app text-adventure --scripts-version=react-scripts-ts
-cd my-app/
+cd text-adventure/
 npm start
 ```
