@@ -3,15 +3,6 @@
     background: lightskyblue;
 }
 
-.GameSelection .Header {
-    background: lightgoldenrodyellow;
-    padding: 2pt 0;
-}
-
-.GameSelection .Grid {
-    padding: 10px;
-}
-
 .GameSelection .Game {
     width: 400px;
     height: 300px;

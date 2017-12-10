@@ -1,0 +1,13 @@
+.Page {
+    width: 100%;
+    background: lightskyblue;
+}
+
+.Page .Header {
+    background: lightgoldenrodyellow;
+    padding: 2pt 0;
+}
+
+.Page .Content {
+    padding: 10px;
+}

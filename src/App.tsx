@@ -2,9 +2,10 @@ import * as React from 'react';
 import './App.css';
 import { Game } from './data/Game';
 import GameSelection from './ui/GameSelection';
+import GamePage from './ui/GamePage';
 
 interface GameState {
-  game: Game | null;
+  game: Game | null;  
 }
 
 class App extends React.Component<{}, GameState> {
@@ -19,7 +20,7 @@ class App extends React.Component<{}, GameState> {
   public render() {
     return (
       <div className="App">
-        {this.state.game ? null : <GameSelection onSelectGame={this.selectGame} />}
+        {this.state.game ? <GamePage game={this.state.game} /> : <GameSelection onSelectGame={this.selectGame} />}
       </div>
     );
   }

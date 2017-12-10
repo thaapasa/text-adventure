@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './GameSelection.css';
+import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
 
@@ -23,15 +24,10 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
 
   public render() {
     return (
-      <div className="GameSelection">
-        <div className="Header">
-          <h1>Pelit</h1>
-        </div>
-        <div className="Grid">
-          {this.state.games.map(g =>
-            <GameIcon {...g} key={g.id} onSelectGame={this.props.onSelectGame}/>)}
-        </div>
-      </div>
+      <Page title="Pelit" className="GameSelection">
+        {this.state.games.map(g =>
+          <GameIcon {...g} key={g.id} onSelectGame={this.props.onSelectGame}/>)}
+      </Page>
     );
   }
 }
