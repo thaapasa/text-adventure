@@ -8,11 +8,15 @@
 }
 
 .Scene .Choice {
-    border: 1px solid coral;
+    border: 1.5pt solid coral;
     background: lightcoral;
     border-radius: 0.8em;
     margin: 3pt;
     padding: 5pt;
     width: 400pt;
     display: inline-block;
+}
+
+.Scene .Choice:hover {
+    background: lightsalmon;
 }

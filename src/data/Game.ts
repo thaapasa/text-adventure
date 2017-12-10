@@ -8,7 +8,7 @@ export interface Scene {
   readonly name: string;
   readonly text: string;
   readonly question?: string;
-  readonly choices: Choice[];
+  readonly choices?: Choice[];
 }
 
 export interface Choice {

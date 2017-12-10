@@ -18,7 +18,11 @@ export default class GamePage extends React.Component<GamePageProps, GamePageSta
     scene: null,
   };
 
-  public async componentWillMount() {
+  public componentDidMount() {
+    this.reset();
+  }
+
+  private reset = async () => {
     const scene = await gameService.getStart(this.props.game);
     this.setState({ scene });
   }
@@ -30,7 +34,7 @@ export default class GamePage extends React.Component<GamePageProps, GamePageSta
 
   public render() {
     return (
-      <Page title={this.props.game.name} className="GamePage">  
+      <Page title={this.props.game.name} className="GamePage" onTitleClick={this.reset}>  
         {this.state.scene ? <SceneView scene={this.state.scene} onSelectScene={this.selectScene}/> : null}
       </Page>
     );
