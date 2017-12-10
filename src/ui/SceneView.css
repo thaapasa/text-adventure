@@ -1,0 +1,18 @@
+.Scene {
+    text-align: center;
+}
+
+.Scene > .Question {
+    margin: 0.7em 0;
+    font-style: italic;
+}
+
+.Scene .Choice {
+    border: 1px solid coral;
+    background: lightcoral;
+    border-radius: 0.8em;
+    margin: 3pt;
+    padding: 5pt;
+    width: 400pt;
+    display: inline-block;
+}

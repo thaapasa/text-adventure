@@ -3,6 +3,7 @@ import './GamePage.css';
 import { Game, Scene } from '../data/Game';
 import Page from './Page';
 import { gameService } from '../data/GameService';
+import SceneView from './SceneView';
 
 interface GamePageProps {
   game: Game;
@@ -22,24 +23,16 @@ export default class GamePage extends React.Component<GamePageProps, GamePageSta
     this.setState({ scene });
   }
 
+  private selectScene = async (sceneId: string) => {
+    const scene = await gameService.getScene(this.props.game, sceneId);
+    this.setState({ scene });
+  }
+
   public render() {
     return (
       <Page title={this.props.game.name} className="GamePage">  
-        {this.state.scene ? <SceneView {...this.state.scene}/> : null}
+        {this.state.scene ? <SceneView scene={this.state.scene} onSelectScene={this.selectScene}/> : null}
       </Page>
-    );
-  }
-}
-
-class SceneView extends React.Component<Scene, {}> {
-  public render() {
-    return (
-      <div>
-        <div>{this.props.name}</div>
-        <div>{this.props.text}</div>
-        {this.props.question ? <div>{this.props.question}</div> : null}
-        {this.props.choices.map(c => <div key={c.sceneId}>{c.text}</div>)}
-      </div>
     );
   }
 }

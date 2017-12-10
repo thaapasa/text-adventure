@@ -1,8 +1,27 @@
 import { Game, Scene } from './Game';
 
 const scenes: Scene[] = [
-  { id: '1', name: 'Aamu', text: 'Eräänä aamuna Sweetie Bell heräsi.',
-    question: 'Mitä Sweetie Bell tekee seuraavaksi?', choices: [] },
+  { id: '1', name: 'Aamu',
+    text: 'Eräänä aamuna Apple Bloom heräsi.',
+    question: 'Mitä Apple Bloom tekee seuraavaksi?',
+    choices: [
+      { text: 'Pesee hampaat', sceneId: '2' },
+      { text: 'Lähtee ulos', sceneId: '3' },
+    ] },
+    { id: '2', name: 'Hampaat harjattu',
+    text: 'No nyt on hampaat harjattu.',
+    question: 'Mitä Apple Bloom tekee seuraavaksi?',
+    choices: [
+      { text: 'Pesee hampaat', sceneId: '2' },
+      { text: 'Lähtee ulos', sceneId: '3' },
+    ] },
+    { id: '3', name: 'Ulkona',
+    text: 'Ulkona on kaunis päivä.',
+    question: 'Mitä Apple Bloom tekee seuraavaksi?',
+    choices: [
+      { text: 'Pesee hampaat', sceneId: '2' },
+      { text: 'Menee nukkumaan', sceneId: '1' },
+    ] },
 ];
 
 const sceneMap: { [id: string]: Scene } = {};
@@ -11,8 +30,8 @@ scenes.forEach(s => sceneMap[s.id] = s);
 class GameService {
   public async getGames(): Promise<Game[]> {
     return [{
-        name: 'Apple Bloom ja tyrskyluodon merihirviöt',
-        id: 'ab1',
+      name: 'Apple Bloom ja tyrskyluodon merihirviöt',
+      id: 'ab1',
     }];
   }
 

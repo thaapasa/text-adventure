@@ -3,7 +3,7 @@
     background: lightskyblue;
 }
 
-.Page .Header {
+.Page > .Header {
     background: lightgoldenrodyellow;
     padding: 2pt 0;
 }
