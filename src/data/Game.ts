@@ -1,6 +1,8 @@
 export interface Game {
   readonly name: string;
+  readonly description: string;
   readonly id: string;
+  readonly startSceneId: string;
 }
 
 export interface Scene {

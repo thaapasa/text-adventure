@@ -20,6 +20,8 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
   public async componentWillMount() {
     const games = await gameService.getGames();
     this.setState({ games });
+    // tslint:disable-next-line no-console
+    console.log('Game list', games);
   }
 
   public render() {
