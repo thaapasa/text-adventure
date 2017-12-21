@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "contentful": "^5.0.5",
+    "debug": "3.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts-ts": "2.8.0"
