@@ -3,6 +3,7 @@ import './GameSelection.css';
 import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
+const debug = require('debug')('game:selection');
 
 interface GameSelectionProps {
   onSelectGame: (game: Game) => void;
@@ -21,7 +22,7 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
     const games = await gameService.getGames();
     this.setState({ games });
     // tslint:disable-next-line no-console
-    console.log('Game list', games);
+    debug('Game list', games);
   }
 
   public render() {
@@ -39,8 +40,9 @@ class GameIcon extends React.Component<Game & { onSelectGame: (game: Game) => vo
     this.props.onSelectGame(this.props);
   }
   public render() {
+    const style = this.props.image ? { backgroundImage: `url(${JSON.stringify(this.props.image)}` } : {};
     return (
-      <div className="Game" onClick={this.selectGame}>
+      <div className="Game" onClick={this.selectGame} style={style}>
         <h2 className="GameTitle">{this.props.name}</h2>
       </div>
     );
