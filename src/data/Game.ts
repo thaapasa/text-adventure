@@ -3,6 +3,7 @@ export interface Game {
   readonly description: string;
   readonly id: string;
   readonly startSceneId: string;
+  readonly image: string | undefined;
 }
 
 export interface Scene {
