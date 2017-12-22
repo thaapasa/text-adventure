@@ -10,6 +10,7 @@ export interface Scene {
   readonly id: string;
   readonly name: string;
   readonly text: string;
+  readonly image: string | undefined;
   readonly question?: string;
   readonly choices?: Choice[];
 }

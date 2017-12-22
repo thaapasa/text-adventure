@@ -10,11 +10,13 @@ const auth = {
 
 const client = contentful.createClient(auth);
 
+type CLink = Entry<{}>;
+
 interface CGame {
   name: string;
   description: string;
-  startScene: Entry<{}>;
-  image: Entry<{}>;
+  startScene: CLink;
+  image: CLink;
 }
 
 interface CImage {
@@ -27,12 +29,13 @@ interface CScene {
   title: string;
   description: string;
   question: string;
-  choices: Entry<{}>[];
+  choices: Entry<CChoice>[];
+  image: Entry<CImage>;
 }
 
 interface CChoice {
   title: string;
-  nextScene: Entry<{}>;
+  nextScene: CLink;
 }
 
 class GameService {
@@ -46,7 +49,7 @@ class GameService {
   }
 
   public async getScene(game: Game, sceneId: string): Promise<Scene> {
-    return this.toScene(await client.getEntry(sceneId));
+    return this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
   }
 
   private findIncludedAsset<T>(assetId: string, entries: EntryCollection<T>): Entry<CImage> | undefined {
@@ -68,21 +71,22 @@ class GameService {
     };
   }
 
-  private toScene = async (x: contentful.Entry<CScene>): Promise<Scene> => {
-    debug('Scene', x);
-    const choices: Choice[] = x.fields.choices ? await Promise.all(x.fields.choices.map(this.toChoice)) : [];
+  private toScene = async (result: EntryCollection<CScene>): Promise<Scene> => {
+    debug('Scene', result);
+    const x: Entry<CScene> = result.items[0];
+    const choices: Choice[] = x.fields.choices ? x.fields.choices.map(this.toChoice) : [];
     return {
       id: x.sys.id,
       name: x.fields.title,
       text: x.fields.description,
       question: x.fields.question,
+      image: x.fields.image ? x.fields.image.fields.file.url : undefined,
       choices,
     };
   }
 
-  private toChoice = async(x: contentful.Entry<{}>): Promise<Choice> => {
-    const entry: Entry<CChoice> = await client.getEntry(x.sys.id);
-    debug('Choice', x, entry);
+  private toChoice = (entry: Entry<CChoice>): Choice => {
+    debug('Choice', entry);
     return {
       text: entry.fields.title,
       sceneId: entry.fields.nextScene.sys.id,
