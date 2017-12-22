@@ -3,6 +3,7 @@ import './GameSelection.css';
 import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
+import { ImageTile } from './ImageTile';
 const debug = require('debug')('game:selection');
 
 interface GameSelectionProps {
@@ -18,11 +19,10 @@ class GameIcon extends React.Component<Game & { onSelectGame: (game: Game) => vo
     this.props.onSelectGame(this.props);
   }
   public render() {
-    const style = this.props.image ? { backgroundImage: `url(${JSON.stringify(this.props.image)}` } : {};
     return (
-      <div className="Game" onClick={this.selectGame} style={style}>
+      <ImageTile className="Game" onClick={this.selectGame} url={this.props.image}>
         <h2 className="GameTitle">{this.props.name}</h2>
-      </div>
+      </ImageTile>
     );
   }
 }
