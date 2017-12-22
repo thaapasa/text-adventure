@@ -13,6 +13,20 @@ interface GameSelectionState {
   games: Game[]; 
 }
 
+class GameIcon extends React.Component<Game & { onSelectGame: (game: Game) => void}, {}> {
+  private selectGame = () => {
+    this.props.onSelectGame(this.props);
+  }
+  public render() {
+    const style = this.props.image ? { backgroundImage: `url(${JSON.stringify(this.props.image)}` } : {};
+    return (
+      <div className="Game" onClick={this.selectGame} style={style}>
+        <h2 className="GameTitle">{this.props.name}</h2>
+      </div>
+    );
+  }
+}
+
 export default class GameSelection extends React.Component<GameSelectionProps, GameSelectionState> {
   public state: GameSelectionState = {
     games: [],
@@ -31,20 +45,6 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
         {this.state.games.map(g =>
           <GameIcon {...g} key={g.id} onSelectGame={this.props.onSelectGame}/>)}
       </Page>
-    );
-  }
-}
-
-class GameIcon extends React.Component<Game & { onSelectGame: (game: Game) => void}, {}> {
-  private selectGame = () => {
-    this.props.onSelectGame(this.props);
-  }
-  public render() {
-    const style = this.props.image ? { backgroundImage: `url(${JSON.stringify(this.props.image)}` } : {};
-    return (
-      <div className="Game" onClick={this.selectGame} style={style}>
-        <h2 className="GameTitle">{this.props.name}</h2>
-      </div>
     );
   }
 }
