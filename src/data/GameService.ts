@@ -1,97 +1,98 @@
-import { Game, Scene } from './Game';
+import { Game, Scene, Choice } from './Game';
+import * as contentful from 'contentful';
+import { EntryCollection, Entry } from 'contentful';
+const debug = require('debug')('game:service');
 
-const scenes: Scene[] = [
-  { id: 'risteys', name: 'Tienristeys',
-    text: 'Eräänä päivänä Fluttershy oli kävelyllä. Hän tuli risteykseen.',
-    question: 'Minne Fluttershy meni?',
-    choices: [
-      { text: 'Vasemmalle', sceneId: 'niitty' },
-      { text: 'Oikealle', sceneId: 'leikkipuisto' },
-      { text: 'Suojatien yli', sceneId: 'toinen-risteys' },
-    ] },
-  { id: 'niitty', name: 'Kaunis niitty',
-    text: 'Fluttershy päätyi kauniille niitylle jossa hän lepäili loppupäivän.' },
-  { id: 'leikkipuisto', name: 'Leikkipuistossa',
-    text: 'Fluttershy päätyi leikkipuistoon jossa vierähtikin koko loppupäivä.' },
-  { id: 'toinen-risteys', name: 'Taas risteyksessä',
-    text: 'Fluttershy käveli eteenpäin, kunnes poliisi pysäytti hänet. ' +
-    'Sitten poliisi huomasi että Fluttershy ei ollutkaan roisto ja sanoi: ' +
-    '"Anteeksi, luulin sinua roistoksi" ja väistyi tieltä. ' +
-    'Fluttershy alkoi kaivaa kiikareita esiin ja lopulta hän löysi ne. ' +
-    'Sitten hän alkoi kiikaroida mitä näkyisi edessä, mutta edessä oli niin paljon ' +
-    'metsikköä, että hän ei nähnyt mitään muuta kuin puita, pensaita ja muita kasveja sotkuisina. ' +
-    'Taas hän päätyi risteykseen.',
-    question: 'Minne Fluttershy menee?',
-    choices: [
-      { text: 'Oikealle', sceneId: 'satumaa' },
-      { text: 'Vasemmalle', sceneId: 'metsä' },
-      { text: 'Suoraan eteen', sceneId: 'salakäytävä' },
-    ] },
-  { id: 'satumaa', name: 'Satumaa',
-    text: 'Yht\'äkkiä Fluttershyn eteen ilmestyi ihana satumaa, jonne Fluttershy ' +
-    'lähti leikkimään loppupäiväksi.'
-  },
-  { id: 'metsä', name: 'Metsä', text: 'Fluttershy meni metsään' },
-  { id: 'salakäytävä', name: 'Salakäytävä',
-    text: 'Sitten Fluttershy huomasi jossain kaukana luolan, missä oli pilkkopimeää. ' +
-    'Fluttershy alkoi juosta eteenpäin pimeässä metsässä kunnes hän pääsi luolalle. ' +
-    'Hän vähän kurkisti sinne uteliaasti. Hän näki pelkkiä hämähäkinseittejä ja muutaman ' +
-    'tulikärpäsen. Vaikka häntä kiinnostikin se, hän meni hakemaan kaverinsa. Kun he ovat ' +
-    'saapuneet paikalle, he menivät vähän lähemmäksi ja Fluttershy sanoi: ' +
-    '"Mennään sisälle, alkaa jo sataakin." He kävelivät sisään jonkin matkaa, kunnes he ' +
-    'päätyivät...',
-    question: 'Minne Fluttershy ja kaverit päätyivät?',
-    choices: [
-      { text: 'Suolle', sceneId: 'suo' },
-      { text: 'Joelle', sceneId: 'joki' },
-      { text: 'Isolle kuopalle', sceneId: 'iso-kuoppa' },
-    ] },
-  { id: 'suo', name: 'Suo', 
-    text: 'Ystävykset päätyivät suolle. Sitten he huomasivat, että suossa oli mättäitä ja silta.',
-    question: 'Miten ystävykset etenivät?',
-    choices: [
-      { text: 'Kävelivät sillan yli', sceneId: 'suon-yli' },
-      { text: 'Pomppivat mättäitä pitkin', sceneId: 'suon-yli' },
-    ],
-  },
-  { id: 'suon-yli', name: 'Tunneli', 
-    text: 'Suon jälkeen ystävykset kävelivät tunnelia pitkin kunnes he päätyivät portille, ' +
-    'joka säteili valoa. He astelivat portin reunalle ja näkivät siellä ...',
-    question: 'Mitä ystävykset näkivät portin reunalla?',
-    choices: [
-      { text: 'Keijumaan', sceneId: 'keijumaa' },
-      { text: 'Prinsessamaan', sceneId: 'prinsessamaa' },
-      { text: 'Merenneitomaan', sceneId: 'merenneitomaa' },
-      { text: 'Satumaan', sceneId: 'satumaa' },
-      { text: 'Pikkuoliomaan', sceneId: 'pikkuoliomaa' },
-    ],
-  },
-  { id: 'joki', name: 'Joki', text: 'Ystävykset päätyivät joelle.' },
-  { id: 'iso-kuoppa', name: 'Iso kuoppa', text: 'Ystävykset päätyivät isoon kuoppaan.' },    
-  { id: 'keijumaa', name: 'Keijumaa', text: 'Keijumetsässä oli kivaa' },
-  { id: 'prinsessamaa', name: 'Prinsessamaa', text: 'Prinsessamaassa oli hauskaa' },
-  { id: 'merenneitomaa', name: 'Merenneitomaa', text: 'Merenneitomaassa oli märkää' },
-  { id: 'pikkuoliomaa', name: 'Pikkuoliomaa', text: 'Pikkuoliomaassa oli pientä' },
-];
+const auth = {
+  space: '534nukjx9idr',
+  accessToken: '6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249',
+};
 
-const sceneMap: { [id: string]: Scene } = {};
-scenes.forEach(s => sceneMap[s.id] = s);
+const client = contentful.createClient(auth);
+
+type CLink = Entry<{}>;
+
+interface CGame {
+  name: string;
+  description: string;
+  startScene: CLink;
+  image: CLink;
+}
+
+interface CImage {
+  file: {
+    url: string;
+  };
+}
+
+interface CScene {
+  title: string;
+  description: string;
+  question: string;
+  choices: Entry<CChoice>[];
+  image: Entry<CImage>;
+}
+
+interface CChoice {
+  title: string;
+  nextScene: CLink;
+}
 
 class GameService {
   public async getGames(): Promise<Game[]> {
-    return [{
-      name: 'Sweetie Bell, Apple Bloom ja Fluttershy salakäytävässä',
-      id: 'ab1',
-    }];
+    const entries = await client.getEntries({ 'content_type': 'game' });
+    return entries.items.map(i => this.toGame(i, entries));
   }
 
   public async getStart(game: Game): Promise<Scene> {
-    return sceneMap.risteys;
+    return this.getScene(game, game.startSceneId);
   }
 
   public async getScene(game: Game, sceneId: string): Promise<Scene> {
-    return sceneMap[sceneId];
+    return this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
   }
+
+  private findIncludedAsset<T>(assetId: string, entries: EntryCollection<T>): Entry<CImage> | undefined {
+    return entries.includes.Asset.find((x: Entry<{}>) => x.sys.id === assetId);
+  }
+
+  private getImageUrl(entry?: Entry<{ file: { url: string }}>): string | undefined {
+    return entry ? entry.fields.file.url : undefined;
+  }
+
+  private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {
+    debug('Game', x, 'entries', entries);
+    return {
+      name: x.fields.name,
+      id: x.sys.id,
+      description: x.fields.description,
+      startSceneId: x.fields.startScene.sys.id,
+      image: x.fields.image ? this.getImageUrl(this.findIncludedAsset(x.fields.image.sys.id, entries)) : undefined,
+    };
+  }
+
+  private toScene = async (result: EntryCollection<CScene>): Promise<Scene> => {
+    debug('Scene', result);
+    const x: Entry<CScene> = result.items[0];
+    const choices: Choice[] = x.fields.choices ? x.fields.choices.map(this.toChoice) : [];
+    return {
+      id: x.sys.id,
+      name: x.fields.title,
+      text: x.fields.description,
+      question: x.fields.question,
+      image: x.fields.image ? x.fields.image.fields.file.url : undefined,
+      choices,
+    };
+  }
+
+  private toChoice = (entry: Entry<CChoice>): Choice => {
+    debug('Choice', entry);
+    return {
+      text: entry.fields.title,
+      sceneId: entry.fields.nextScene.sys.id,
+    };
+  }
+
 }
 
 export const gameService = new GameService();
