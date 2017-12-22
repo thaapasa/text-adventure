@@ -1,4 +1,4 @@
-import { Game, Scene } from './Game';
+import { Game, Scene, Choice } from './Game';
 import * as contentful from 'contentful';
 import { EntryCollection, Entry } from 'contentful';
 const debug = require('debug')('game:service');
@@ -6,7 +6,6 @@ const debug = require('debug')('game:service');
 const auth = {
   space: '534nukjx9idr',
   accessToken: '6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249',
-  resolveLinks: false,
 };
 
 const client = contentful.createClient(auth);
@@ -28,6 +27,12 @@ interface CScene {
   title: string;
   description: string;
   question: string;
+  choices: Entry<{}>[];
+}
+
+interface CChoice {
+  title: string;
+  nextScene: Entry<{}>;
 }
 
 class GameService {
@@ -63,14 +68,24 @@ class GameService {
     };
   }
 
-  private toScene = (x: contentful.Entry<CScene>): Scene => {
+  private toScene = async (x: contentful.Entry<CScene>): Promise<Scene> => {
     debug('Scene', x);
+    const choices: Choice[] = x.fields.choices ? await Promise.all(x.fields.choices.map(this.toChoice)) : [];
     return {
       id: x.sys.id,
       name: x.fields.title,
       text: x.fields.description,
       question: x.fields.question,
-      choices: [],
+      choices,
+    };
+  }
+
+  private toChoice = async(x: contentful.Entry<{}>): Promise<Choice> => {
+    const entry: Entry<CChoice> = await client.getEntry(x.sys.id);
+    debug('Choice', x, entry);
+    return {
+      text: entry.fields.title,
+      sceneId: entry.fields.nextScene.sys.id,
     };
   }
 
