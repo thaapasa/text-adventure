@@ -4,6 +4,7 @@ import { Game, Scene } from '../data/Game';
 import Page from './Page';
 import { gameService } from '../data/GameService';
 import SceneView from './SceneView';
+import { RouteComponentProps } from 'react-router';
 
 interface GamePageProps {
   game: Game;
@@ -13,7 +14,7 @@ interface GamePageState {
   scene: Scene | null;
 }
 
-export default class GamePage extends React.Component<GamePageProps, GamePageState> {
+export class GamePage extends React.Component<GamePageProps, GamePageState> {
   public state: GamePageState = {
     scene: null,
   };
@@ -38,5 +39,24 @@ export default class GamePage extends React.Component<GamePageProps, GamePageSta
         {this.state.scene ? <SceneView scene={this.state.scene} onSelectScene={this.selectScene}/> : null}
       </Page>
     );
+  }
+}
+
+interface RoutedGamePageState { 
+  game: Game | null; 
+}
+
+export class RoutedGamePage extends React.Component<RouteComponentProps<{ gameId: string }>, RoutedGamePageState> {
+  public state: RoutedGamePageState = {
+    game: null,
+  };
+
+  public async componentDidMount() {
+    const game = await gameService.getGame(this.props.match.params.gameId);
+    this.setState({ game });
+  }
+
+  public render() {
+    return this.state.game ? <GamePage game={this.state.game} /> : null;
   }
 }

@@ -44,6 +44,11 @@ class GameService {
     return entries.items.map(i => this.toGame(i, entries));
   }
 
+  public async getGame(gameId: string): Promise<Game> {
+    const entries = await client.getEntries({ 'content_type': 'game', 'sys.id': gameId, include: 1 });
+    return entries.items.map(i => this.toGame(i, entries))[0];
+  }
+
   public async getStart(game: Game): Promise<Scene> {
     return this.getScene(game, game.startSceneId);
   }

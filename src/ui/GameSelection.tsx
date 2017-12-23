@@ -4,30 +4,24 @@ import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
 import { ImageTile } from './ImageTile';
+import { Link } from 'react-router-dom';
 const debug = require('debug')('game:selection');
-
-interface GameSelectionProps {
-  onSelectGame: (game: Game) => void;
-}
 
 interface GameSelectionState {
   games: Game[]; 
 }
 
-class GameIcon extends React.Component<Game & { onSelectGame: (game: Game) => void}, {}> {
-  private selectGame = () => {
-    this.props.onSelectGame(this.props);
-  }
+class GameIcon extends React.Component<Game, {}> {
   public render() {
     return (
-      <ImageTile className="Game" onClick={this.selectGame} url={this.props.image}>
-        <h2 className="GameTitle">{this.props.name}</h2>
+      <ImageTile className="Game" url={this.props.image}>
+        <h2 className="GameTitle"><Link to={`/${this.props.id}`}>{this.props.name}</Link></h2>
       </ImageTile>
     );
   }
 }
 
-export default class GameSelection extends React.Component<GameSelectionProps, GameSelectionState> {
+export default class GameSelection extends React.Component<{}, GameSelectionState> {
   public state: GameSelectionState = {
     games: [],
   };
@@ -35,7 +29,6 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
   public async componentWillMount() {
     const games = await gameService.getGames();
     this.setState({ games });
-    // tslint:disable-next-line no-console
     debug('Game list', games);
   }
 
@@ -43,7 +36,7 @@ export default class GameSelection extends React.Component<GameSelectionProps, G
     return (
       <Page title="Pelit" className="GameSelection">
         {this.state.games.map(g =>
-          <GameIcon {...g} key={g.id} onSelectGame={this.props.onSelectGame}/>)}
+          <GameIcon {...g} key={g.id} />)}
       </Page>
     );
   }
