@@ -16,7 +16,7 @@ interface CGame {
   name: string;
   description: string;
   startScene: CLink;
-  image: CLink;
+  image: Entry<CImage>;
 }
 
 interface CImage {
@@ -40,7 +40,7 @@ interface CChoice {
 
 class GameService {
   public async getGames(): Promise<Game[]> {
-    const entries = await client.getEntries({ 'content_type': 'game' });
+    const entries = await client.getEntries({ 'content_type': 'game', include: 1 });
     return entries.items.map(i => this.toGame(i, entries));
   }
 
@@ -52,14 +52,6 @@ class GameService {
     return this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
   }
 
-  private findIncludedAsset<T>(assetId: string, entries: EntryCollection<T>): Entry<CImage> | undefined {
-    return entries.includes.Asset.find((x: Entry<{}>) => x.sys.id === assetId);
-  }
-
-  private getImageUrl(entry?: Entry<{ file: { url: string }}>): string | undefined {
-    return entry ? entry.fields.file.url : undefined;
-  }
-
   private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {
     debug('Game', x, 'entries', entries);
     return {
@@ -67,7 +59,7 @@ class GameService {
       id: x.sys.id,
       description: x.fields.description,
       startSceneId: x.fields.startScene.sys.id,
-      image: x.fields.image ? this.getImageUrl(this.findIncludedAsset(x.fields.image.sys.id, entries)) : undefined,
+      image: x.fields.image ? x.fields.image.fields.file.url : undefined,
     };
   }
 
