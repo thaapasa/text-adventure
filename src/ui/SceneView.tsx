@@ -1,11 +1,13 @@
 import * as React from 'react';
 import './SceneView.css';
-import { Scene } from '../data/Game';
+import { Scene, Game } from '../data/Game';
 import { ImageTile } from './ImageTile';
+import { Link } from 'react-router-dom';
+import { gameService } from '../data/GameService';
 
-export default class SceneView extends React.Component<{
+export class SceneView extends React.Component<{
+  readonly game: Game;
   readonly scene: Scene;
-  readonly onSelectScene: (sceneId: string) => void;
 }, {}> {
   public render() {
     return (
@@ -14,7 +16,10 @@ export default class SceneView extends React.Component<{
         <div className="Introdution">{this.props.scene.text}</div>
         {this.props.scene.question ? <div className="Question">{this.props.scene.question}</div> : null}
         {this.props.scene.choices && this.props.scene.choices.map(c =>
-          <div className="Choice" key={c.sceneId} onClick={() => this.props.onSelectScene(c.sceneId)}>{c.text}</div>)}
+          <div className="Choice" key={c.sceneId}>
+            <Link to={gameService.getSceneLink(this.props.game, c.sceneId)}>{c.text}</Link>
+          </div>
+        )}
       </ImageTile>
     );
   }

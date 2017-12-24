@@ -1,6 +1,7 @@
 import { Game, Scene, Choice } from './Game';
 import * as contentful from 'contentful';
 import { EntryCollection, Entry } from 'contentful';
+import { Map } from './Types';
 const debug = require('debug')('game:service');
 
 const auth = {
@@ -38,10 +39,23 @@ interface CChoice {
   nextScene: CLink;
 }
 
+const gameCache: Map<Game> = {};
+const sceneCache: Map<Scene> = {};
+
 class GameService {
   public async getGames(): Promise<Game[]> {
     const entries = await client.getEntries({ 'content_type': 'game', include: 1 });
-    return entries.items.map(i => this.toGame(i, entries));
+    const games = entries.items.map(i => this.toGame(i, entries));
+    games.forEach(g => gameCache[g.id] = g);
+    return games;
+  }
+
+  public async getGame(gameId: string): Promise<Game> {
+    if (gameCache[gameId]) { return gameCache[gameId]; }
+    const entries = await client.getEntries({ 'content_type': 'game', 'sys.id': gameId, include: 1 });
+    const game = entries.items.map(i => this.toGame(i, entries))[0];
+    gameCache[gameId] = game;
+    return game;
   }
 
   public async getStart(game: Game): Promise<Scene> {
@@ -49,7 +63,19 @@ class GameService {
   }
 
   public async getScene(game: Game, sceneId: string): Promise<Scene> {
-    return this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
+    const id = `${game.id}::${sceneId}`;
+    if (sceneCache[id]) { return sceneCache[id]; }
+    const scene = await this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
+    sceneCache[id] = scene;
+    return scene;
+  }
+
+  public getGameLink(game: Game): string {
+    return `/${game.id}`;
+  }
+
+  public getSceneLink(game: Game, sceneId: string): string {
+    return `/${game.id}/${sceneId}`;
   }
 
   private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {
