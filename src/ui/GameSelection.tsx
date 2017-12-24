@@ -15,7 +15,7 @@ class GameIcon extends React.Component<Game, {}> {
   public render() {
     return (
       <ImageTile className="Game" url={this.props.image}>
-        <h2 className="GameTitle"><Link to={`/${this.props.id}`}>{this.props.name}</Link></h2>
+        <h2 className="GameTitle"><Link to={gameService.getGameLink(this.props)}>{this.props.name}</Link></h2>
       </ImageTile>
     );
   }

@@ -57,6 +57,14 @@ class GameService {
     return this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
   }
 
+  public getGameLink(game: Game): string {
+    return `/${game.id}`;
+  }
+
+  public getSceneLink(game: Game, sceneId: string): string {
+    return `/${game.id}/${sceneId}`;
+  }
+
   private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {
     debug('Game', x, 'entries', entries);
     return {
