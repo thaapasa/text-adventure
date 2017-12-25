@@ -45,7 +45,9 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
   public render() {
     return (
       <Page title={this.props.game.name} className="GamePage" onTitleClick={this.resetGame}>
-        {this.state.scene ? <SceneView game={this.props.game} scene={this.state.scene} /> : null}
+        {this.state.scene ?
+          <SceneView game={this.props.game} scene={this.state.scene} history={this.props.history} /> :
+          null}
       </Page>
     );
   }

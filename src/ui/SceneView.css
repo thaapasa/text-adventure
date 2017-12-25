@@ -30,15 +30,17 @@
 }
 
 .Scene .Choice {
-    border: 1.5pt solid coral;
-    background: lightcoral;
+    border: 1.5pt solid #00000099;
+    background: #00000066;
     border-radius: 0.8em;
     margin: 3pt;
     padding: 5pt;
     width: 400pt;
     display: inline-block;
+    text-decoration: none;
+    color: white;
 }
 
 .Scene .Choice:hover {
-    background: lightsalmon;
+    background: rgba(107, 189, 233, 0.5);
 }
