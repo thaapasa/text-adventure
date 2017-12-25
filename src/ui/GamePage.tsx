@@ -39,7 +39,6 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
   }
 
   private resetGame = () => {
-    debug('Pliip');
     this.props.history.push(gameService.getGameLink(this.props.game));
   }
 

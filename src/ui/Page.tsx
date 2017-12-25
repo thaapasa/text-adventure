@@ -12,9 +12,7 @@ export default class Page extends React.Component<{
         <div className="Header" onClick={this.props.onTitleClick}>
           <h1>{this.props.title}</h1>
         </div>
-        <div className="Content">
-          {this.props.children}
-        </div>
+        <div className="Content">{this.props.children}</div>
       </div>
     );
   }
