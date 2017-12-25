@@ -2,6 +2,7 @@
     text-align: center;
     height: 600px;
     padding: 10px;
+    font-size: 14pt;
 }
 
 .Scene > .Header {
@@ -13,8 +14,19 @@
 }
 
 .Scene > .Question {
-    margin: 0.7em 0;
+    margin: 1.2em 0em;
+}
+
+.Scene > .Question > .Text {
+    background: #ffffff77;
+    padding: 0.5em;
     font-style: italic;
+}
+
+.Scene > .Introduction {
+    margin: 0.7em 3em;
+    padding: 0.5em;
+    background: #ffffff77;
 }
 
 .Scene .Choice {
