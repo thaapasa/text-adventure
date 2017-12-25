@@ -18,6 +18,7 @@
   background-size: 180px 172px;
   top: 0;
   left: 0;
+  z-index: 10;
   margin-top: -35px;
   margin-left: -55px;
 }

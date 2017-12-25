@@ -1,6 +1,15 @@
 .Scene {
     text-align: center;
-    height: 500pt;
+    height: 600px;
+    padding: 10px;
+}
+
+.Scene > .Header {
+    padding: 10px;
+}
+
+.Scene > .Header h3 {
+    margin: 0;
 }
 
 .Scene > .Question {
