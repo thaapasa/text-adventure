@@ -4,24 +4,28 @@ import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
 import { ImageTile } from './ImageTile';
-import { Link } from 'react-router-dom';
+import { History } from 'history';
+import { RouteComponentProps } from 'react-router';
 const debug = require('debug')('game:selection');
 
 interface GameSelectionState {
   games: Game[]; 
 }
 
-class GameIcon extends React.Component<Game, {}> {
+class GameIcon extends React.Component<Game & { history: History }, {}> {
+  private selectGame = () => {
+    this.props.history.push(gameService.getGameLink(this.props));
+  }
   public render() {
     return (
-      <ImageTile className="Game" url={this.props.image}>
-        <h2 className="GameTitle"><Link to={gameService.getGameLink(this.props)}>{this.props.name}</Link></h2>
+      <ImageTile className="Game" url={this.props.image} onClick={this.selectGame}>
+        <h2 className="GameTitle">{this.props.name}</h2>
       </ImageTile>
     );
   }
 }
 
-export default class GameSelection extends React.Component<{}, GameSelectionState> {
+export default class GameSelection extends React.Component<RouteComponentProps<{}>, GameSelectionState> {
   public state: GameSelectionState = {
     games: [],
   };
@@ -37,7 +41,7 @@ export default class GameSelection extends React.Component<{}, GameSelectionStat
       <Page title="Pelit" className="GameSelection">
         <div className="GameIconArea">
           {this.state.games.map(g =>
-            <GameIcon {...g} key={g.id} />)}
+            <GameIcon {...g} key={g.id} history={this.props.history} />)}
         </div>
       </Page>
     );
