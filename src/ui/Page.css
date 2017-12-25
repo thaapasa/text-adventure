@@ -1,10 +1,9 @@
 .Page {
     width: 100%;
-    background: lightskyblue;
+    background: white;
 }
 
 .Page > .Header {
-    background: lightgoldenrodyellow;
     padding: 2pt 0;
 }
 

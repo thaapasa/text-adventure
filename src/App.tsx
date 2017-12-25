@@ -17,15 +17,21 @@ class App extends React.Component<{}, GameState> {
 
   public render() {
     return (
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route exact={true} path="/:gameId/:sceneId" component={RoutedGamePage} />
-            <Route exact={true} path="/:gameId" component={RoutedGamePage} />
-            <Route exact={true} path="/" component={GameSelection} />
-          </Switch>
+      <div className="LayoutBg">
+        <div className="LayoutHeader" />
+        <div className="LayoutMain">
+          <Router>
+            <div className="App">
+              <div className="LayoutFlowerBorder" />
+              <Switch>
+                <Route exact={true} path="/:gameId/:sceneId" component={RoutedGamePage} />
+                <Route exact={true} path="/:gameId" component={RoutedGamePage} />
+                <Route exact={true} path="/" component={GameSelection} />
+              </Switch>
+            </div>
+          </Router>
         </div>
-      </Router>
+      </div>
     );
   }
 }
