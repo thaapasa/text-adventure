@@ -35,8 +35,10 @@ export default class GameSelection extends React.Component<{}, GameSelectionStat
   public render() {
     return (
       <Page title="Pelit" className="GameSelection">
-        {this.state.games.map(g =>
-          <GameIcon {...g} key={g.id} />)}
+        <div className="GameIconArea">
+          {this.state.games.map(g =>
+            <GameIcon {...g} key={g.id} />)}
+        </div>
       </Page>
     );
   }
