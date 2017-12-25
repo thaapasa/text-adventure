@@ -5,11 +5,13 @@ import Page from './Page';
 import { gameService } from '../data/GameService';
 import { RouteComponentProps } from 'react-router';
 import { SceneView } from './SceneView';
+import { History } from 'history';
 const debug = require('debug')('game:game-page');
 
 interface GamePageProps {
   game: Game;
   sceneId: string | undefined;
+  history: History;
 }
 
 interface GamePageState {
@@ -36,9 +38,14 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
     this.setState({ scene });
   }
 
+  private resetGame = () => {
+    debug('Pliip');
+    this.props.history.push(gameService.getGameLink(this.props.game));
+  }
+
   public render() {
     return (
-      <Page title={this.props.game.name} className="GamePage">
+      <Page title={this.props.game.name} className="GamePage" onTitleClick={this.resetGame}>
         {this.state.scene ? <SceneView game={this.props.game} scene={this.state.scene} /> : null}
       </Page>
     );
@@ -66,6 +73,8 @@ export class RoutedGamePage extends React.Component<RouteComponentProps<RoutedGa
   }
 
   public render() {
-    return this.state.game ? <GamePage game={this.state.game} sceneId={this.props.match.params.sceneId} /> : null;
+    return this.state.game ?
+      <GamePage game={this.state.game} sceneId={this.props.match.params.sceneId} history={this.props.history} /> :
+      null;
   }
 }
