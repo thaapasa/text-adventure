@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CSSProperties } from 'react';
 
 interface ImageTileProps {
-  readonly url?: string;
+  readonly url?: string | null;
   readonly style?: CSSProperties;
   readonly className?: string;
   readonly onClick?: () => void;

@@ -59,6 +59,7 @@ class GameService {
   }
 
   public async getStart(game: Game): Promise<Scene> {
+    if (!game.startSceneId) { throw new Error('no game'); }
     return this.getScene(game, game.startSceneId);
   }
 
@@ -84,8 +85,8 @@ class GameService {
       name: x.fields.name,
       id: x.sys.id,
       description: x.fields.description,
-      startSceneId: x.fields.startScene.sys.id,
-      image: x.fields.image ? x.fields.image.fields.file.url : undefined,
+      startSceneId: x.fields.startScene ? x.fields.startScene.sys.id : null,
+      image: x.fields.image ? x.fields.image.fields.file.url : null,
     };
   }
 
@@ -98,7 +99,7 @@ class GameService {
       name: x.fields.title,
       text: x.fields.description,
       question: x.fields.question,
-      image: x.fields.image ? x.fields.image.fields.file.url : undefined,
+      image: x.fields.image ? x.fields.image.fields.file.url : null,
       choices,
     };
   }

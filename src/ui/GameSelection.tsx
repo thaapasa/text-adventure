@@ -14,7 +14,9 @@ interface GameSelectionState {
 
 class GameIcon extends React.Component<Game & { history: History }, {}> {
   private selectGame = () => {
-    this.props.history.push(gameService.getGameLink(this.props));
+    if (this.props.startSceneId) {
+      this.props.history.push(gameService.getGameLink(this.props));
+    }
   }
   public render() {
     return (
