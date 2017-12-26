@@ -39,4 +39,10 @@
   .App {
     width: 100%;
   }
+  .LayoutHeader {
+    height: 40pt;
+  }
+  .LayoutFlowerBorder {
+    display: none;
+  }
 }

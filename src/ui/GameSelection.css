@@ -4,12 +4,22 @@
 }
 
 .GameSelection .GameIconArea {
-    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+}
+
+@media (max-width: 700px) {
+    .GameSelection .GameIconArea {
+        grid-template-columns: 1fr;
+    }
 }
 
 .GameSelection .Game {
-    width: 400px;
-    height: 300px;
+    margin: 10px;
+    width: auto;
+    height: 0;
+    padding-bottom: 75%;
     background: lightseagreen;
     text-align: center;
     position: relative;

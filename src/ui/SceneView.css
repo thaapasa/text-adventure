@@ -1,7 +1,9 @@
 .Scene {
     text-align: center;
-    height: 600px;
+    width: auto;
+    height: 0;
     padding: 10px;
+    padding-bottom: 65%;
     font-size: 14pt;
 }
 
