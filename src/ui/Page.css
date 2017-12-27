@@ -4,6 +4,7 @@
 }
 
 .Page > .Header {
+    position: relative;
     padding: 0;
     margin: 0;
     height: 80px;
@@ -17,6 +18,12 @@
     margin: 0;
     padding-top: 25px;
     font-size: 20pt;
+}
+
+.Page > .Header > .PageIcons {
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 
 .Page .Content {

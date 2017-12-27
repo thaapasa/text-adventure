@@ -93,6 +93,7 @@ class GameService {
   private toScene = async (result: EntryCollection<CScene>): Promise<Scene> => {
     debug('Scene', result);
     const x: Entry<CScene> = result.items[0];
+    if (!x) { throw new Error('No scene'); }
     const choices: Choice[] = x.fields.choices ? x.fields.choices.map(this.toChoice) : [];
     return {
       id: x.sys.id,
