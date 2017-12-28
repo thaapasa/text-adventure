@@ -1,16 +1,21 @@
 import * as React from 'react';
 import './IconBar.css';
 import { History } from 'history';
+import { MouseEvent } from 'react';
 const debug = require('debug')('game:icon-bar');
 
-function Icon({ icon, onClick }: { icon: string, onClick?: () => void }) {
+function Icon({ icon, onClick }: {
+  readonly icon: string,
+  readonly onClick?: (event: MouseEvent<HTMLImageElement>) => void,
+}) {
   return <img className="Icon" src={icon} onClick={onClick} />;
 }
 
 export class IconBar extends React.Component<{ className?: string, history: History }, {}> {
-  private goHome = () => {
+  private goHome = (event: MouseEvent<HTMLImageElement>) => {
     debug('Go home');
-    document.location.href = '/';
+    this.props.history.push('/g/pelit');
+    event.stopPropagation();
   }
   public render() {
     return (

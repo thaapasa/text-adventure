@@ -25,9 +25,9 @@ class App extends React.Component<{}, GameState> {
               <div className="LayoutFlowerBorder" />
               <Switch>
                 <Route exact={true} path="/" component={GameSelection} />
-                <Route exact={true} path="/pelit" component={GameSelection} />
-                <Route exact={true} path="/:gameId/:sceneId" component={RoutedGamePage} />
-                <Route exact={true} path="/:gameId" component={RoutedGamePage} />
+                <Route exact={true} path="/g/pelit" component={GameSelection} />
+                <Route exact={true} path="/g/:gameId/:sceneId" component={RoutedGamePage} />
+                <Route exact={true} path="/g/:gameId" component={RoutedGamePage} />
               </Switch>
             </div>
           </Router>

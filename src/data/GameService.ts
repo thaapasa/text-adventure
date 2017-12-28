@@ -72,11 +72,11 @@ class GameService {
   }
 
   public getGameLink(game: Game): string {
-    return `/${game.id}`;
+    return `/g/${game.id}`;
   }
 
   public getSceneLink(game: Game, sceneId: string): string {
-    return `/${game.id}/${sceneId}`;
+    return `/g/${game.id}/${sceneId}`;
   }
 
   private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {
