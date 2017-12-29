@@ -12,7 +12,7 @@ class Choice extends React.Component<{ history: History, title: string, link: st
   }
   public render() {
     return (
-      <div className="Choice" onClick={this.selectLink}>
+      <div className="Scene-Choice" onClick={this.selectLink}>
         {this.props.title}
       </div>
     );
@@ -27,18 +27,20 @@ export class SceneView extends React.Component<{
   public render() {
     return (
       <ImageTile className="Scene" url={this.props.scene.image}>
-        <div className="Header"><h3>{this.props.scene.name}</h3></div>
-        <div className="Introduction"><Markdown source={this.props.scene.text} /></div>
+        <div className="Scene-Header"><h3>{this.props.scene.name}</h3></div>
+        <div className="Scene-Spacer">
+          <div className="Scene-Introduction"><Markdown source={this.props.scene.text} /></div>
+        </div>
         {this.props.scene.question ?
-          <div className="Question"><span className="Text">{this.props.scene.question}</span></div> :
+          <div className="Scene-Question"><span className="Scene-Text">{this.props.scene.question}</span></div> :
           null}
-        {this.props.scene.choices && this.props.scene.choices.map(c =>
+        {this.props.scene.choices && <div className="Scene-Choices">{this.props.scene.choices.map(c =>
           <Choice
             key={c.sceneId}
             history={this.props.history}
             title={c.text}
             link={gameService.getSceneLink(this.props.game, c.sceneId)} />
-        )}
+        )}</div>}
       </ImageTile>
     );
   }

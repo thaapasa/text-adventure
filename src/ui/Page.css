@@ -71,4 +71,16 @@
         padding: 10px 80px 10px 19px;
         font-size: 16pt;
     }
+    .Page {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-flow: column;
+    }
+    .Page-Content {
+        flex: 1;
+    }
 }

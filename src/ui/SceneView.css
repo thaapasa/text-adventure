@@ -2,36 +2,41 @@
     text-align: center;
     width: auto;
     height: 0;
-    padding: 10px;
     padding-bottom: 65%;
     font-size: 14pt;
+    display: flex;
+    flex-flow: column;
 }
 
-.Scene > .Header {
+.Scene-Header {
     padding: 10px;
 }
 
-.Scene > .Header h3 {
+.Scene-Header h3 {
     margin: 0;
 }
 
-.Scene > .Question {
+.Scene-Question {
     margin: 1.2em 0em;
 }
 
-.Scene > .Question > .Text {
+.Scene-Text {
     background: #ffffff77;
     padding: 0.5em;
     font-style: italic;
 }
 
-.Scene > .Introduction {
+.Scene-Introduction {
     margin: 0.7em 3em;
     padding: 0.5em;
     background: #ffffff99;
 }
 
-.Scene .Choice {
+.Scene-Choices {
+    padding-bottom: 10px;
+}
+
+.Scene-Choice {
     border: 1.5pt solid #00000099;
     background: #00000066;
     border-radius: 0.8em;
@@ -43,6 +48,30 @@
     color: white;
 }
 
-.Scene .Choice:hover {
+.Scene-Choice:hover {
     background: rgba(107, 189, 233, 0.5);
+}
+
+@media (max-width: 1020px) {
+    .Scene {
+        height: 100%;
+        padding-bottom: 0;
+    }
+    
+    .Scene-Choice {
+        width: calc(100% - 50px);
+    }
+
+    .Scene-Introduction {
+        margin: 0.7em 0px;
+        padding: 5px 20px;
+        background: #ffffff99;
+    }
+
+    .Scene-Spacer {
+        flex: 1;
+        height: 10px;
+        overflow-y: auto;
+    }
+    
 }

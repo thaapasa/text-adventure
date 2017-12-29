@@ -40,7 +40,7 @@ export default class GameSelection extends React.Component<RouteComponentProps<{
 
   public render() {
     return (
-      <Page title="Pelit" className="GameSelection" history={this.props.history}>
+      <Page title="Pelit" className="GameSelection" history={this.props.history} allowScroll={true}>
         <div className="GameIconArea">
           {this.state.games.map(g =>
             <GameIcon {...g} key={g.id} history={this.props.history} />)}

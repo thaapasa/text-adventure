@@ -8,10 +8,11 @@ export default class Page extends React.Component<{
   readonly className?: string;
   readonly history: History;
   readonly onTitleClick?: () => void;
+  readonly allowScroll?: boolean;
 }, {}> {
   public render() {
     return (
-      <div className={'Page ' + (this.props.className || '')}>
+      <div className={'Page ' + (this.props.className || '')} style={this.props.allowScroll ? allowScroll : noStyle}>
         <div className="Page-Header" onClick={this.props.onTitleClick}>
           <div className="Page-Title"><h1>{this.props.title}</h1></div>
           <IconBar className="Page-Icons" history={this.props.history} />
@@ -21,3 +22,6 @@ export default class Page extends React.Component<{
     );
   }
 }
+
+const allowScroll = { overflowY: 'auto' };
+const noStyle = {};
