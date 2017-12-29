@@ -1,5 +1,6 @@
 {
     "name": "Seikkailut",
+    "short_name": "Seikkailut",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,6 +14,7 @@
         }
     ],
     "start_url": "./index.html",
+    "orientation": "portrait",
     "theme_color": "#f2f2ed",
     "background_color": "#f2f2ed",
     "display": "standalone"
