@@ -3,30 +3,72 @@
     background: white;
 }
 
-.Page > .Header {
+.Page-Header {
     position: relative;
     padding: 0;
     margin: 0;
-    height: 80px;
+    min-height: 80px;
     border-bottom: 1px solid #cdcdcd;
     text-align: center;
     background-color: #f5f5f5;
+    white-space: nowrap;
 }
 
-.Page > .Header h1 {
-    padding: 0;
+.Page-Header::before {
+    height: 80px;
+    width: 1px;
+    display: inline-block;
+    overflow: hidden;
+    content: '';
+    vertical-align: middle;
+}
+
+.Page-Title {
+    vertical-align: top;
+    display: inline-block;
     margin: 0;
-    padding-top: 25px;
+    padding: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.Page-Title::before {
+    height: 100%;
+    width: 1px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    content: '';
+}
+
+.Page-Title > h1 {
+    padding: 10px 80px 10px 18px;
+    margin: 0;
+    display: inline-block;
     font-size: 20pt;
+    vertical-align: middle;
+    white-space: normal;
 }
 
-.Page > .Header > .PageIcons {
+.Page-Icons {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 20px;
+    top: 50%;
+    margin-top: -25px;
 }
 
-.Page .Content {
+.Page-Content {
     padding: 0;
     margin: 0;
+}
+
+
+@media (max-width: 1020px) {
+    .Page-Header {
+        text-align: left;
+    }
+    .Page-Title > h1 {
+        padding: 10px 80px 10px 19px;
+        font-size: 16pt;
+    }
 }
