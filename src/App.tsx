@@ -3,12 +3,15 @@ import './App.css';
 import { Game } from './data/Game';
 import GameSelection from './ui/GameSelection';
 import { RoutedGamePage } from './ui/GamePage';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { Switch } from 'react-router';
+import configureHistory from './History';
 
 interface GameState {
   game: Game | null;  
 }
+
+const history = configureHistory();
 
 class App extends React.Component<{}, GameState> {
   public state: GameState = {
@@ -20,7 +23,7 @@ class App extends React.Component<{}, GameState> {
       <div className="LayoutBg">
         <div className="LayoutHeader" />
         <div className="LayoutMain">
-          <Router>
+          <Router history={history}>
             <div className="App">
               <div className="LayoutFlowerBorder" />
               <Switch>
