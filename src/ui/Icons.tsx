@@ -5,7 +5,7 @@ import { MouseEvent, CSSProperties } from 'react';
 const colors = {
   chevron: '#8adba9',
   home: '#3b87f8',
-  textSize: '#d4d386',
+  textSize: 'rgb(224, 222, 83)',
   reload: 'rgb(144, 195, 255)',
   book: 'rgb(218, 177, 236)',
   photo: 'rgb(253, 117, 188)',

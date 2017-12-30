@@ -38,7 +38,6 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
   }
 
   private loadScene = async (props: GamePageProps) => {
-    this.setState({ scene: null, items: [] });
     const scene = props.sceneId ?
       await gameService.getScene(props.game, props.sceneId) :
       await gameService.getStart(props.game);

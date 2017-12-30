@@ -56,6 +56,7 @@ interface CItem {
 
 const gameCache: Map<Game> = {};
 const sceneCache: Map<Scene> = {};
+const itemCache: Map<Item> = {};
 
 class GameService {
   public async getGames(): Promise<Game[]> {
@@ -96,8 +97,11 @@ class GameService {
   }
 
   public async getItem(id: string): Promise<Item> {
+    if (itemCache[id]) { return itemCache[id]; }
     const items = await client.getEntries({ 'content_type': 'Item', 'sys.id': id, include: 2 });
-    return this.toItem(items.items[0]);
+    const item = this.toItem(items.items[0]);
+    itemCache[id] = item;
+    return item;
   }
 
   private toItem = (x: contentful.Entry<CItem>): Item => {
