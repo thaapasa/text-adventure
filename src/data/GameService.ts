@@ -1,4 +1,4 @@
-import { Game, Scene, Choice, Condition, ConditionType } from './Game';
+import { Game, Scene, Choice, Condition, ConditionType, ActionType, Action } from './Game';
 import * as contentful from 'contentful';
 import { EntryCollection, Entry } from 'contentful';
 import { Map } from './Types';
@@ -38,9 +38,14 @@ interface CChoice {
   readonly title: string;
   readonly nextScene: CLink;
   readonly conditions?: Entry<CItemCondition>[];
+  readonly actions?: Entry<CItemAction>[];
 }
 
 interface CItemCondition {
+  readonly item: Entry<CItem>;
+}
+
+interface CItemAction {
   readonly item: Entry<CItem>;
 }
 
@@ -130,13 +135,29 @@ class GameService {
     };
   }
 
+  private toActionType(ctype: string): ActionType {
+    switch (ctype) {
+      case 'actionLoseItem': return 'loseItem';
+      case 'actionReceiveItem': return 'receiveItem';
+      default: debug('Unknown action type', ctype); return 'receiveItem';
+    }
+  }
+
+  private toAction = (entry: Entry<CItemAction>): Action => {
+    debug('Action', entry);
+    return {
+      type: this.toActionType(entry.sys.contentType.sys.id),
+      item: entry.fields.item.sys.id,
+    };
+  }
+
   private toChoice = (entry: Entry<CChoice>): Choice => {
     debug('Choice', entry);
     return {
       text: entry.fields.title,
       sceneId: entry.fields.nextScene.sys.id,
       conditions: entry.fields.conditions ? entry.fields.conditions.map(this.toCondition) : [],
-      actions: [],
+      actions: entry.fields.actions ? entry.fields.actions.map(this.toAction) : [],
     };
   }
 
