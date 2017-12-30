@@ -1,12 +1,15 @@
 import { Game, Scene, Choice, Condition, ConditionType, ActionType, Action, Item } from './Game';
 import * as contentful from 'contentful';
-import { EntryCollection, Entry } from 'contentful';
+import { EntryCollection, Entry, CreateClientParams } from 'contentful';
 import { Map } from './Types';
 const debug = require('debug')('game:service');
 
-const auth = {
+const auth: CreateClientParams = {
   space: '534nukjx9idr',
   accessToken: '6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249',
+  host: 'seikkailut.pomeranssi.fi',
+  insecure: false,
+  basePath: 'contentful',
 };
 
 const client = contentful.createClient(auth);
