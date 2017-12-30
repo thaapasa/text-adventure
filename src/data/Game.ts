@@ -36,6 +36,7 @@ export interface Item {
 }
 
 export interface Choice {
+  readonly id: string;
   readonly text: string;
   readonly sceneId: string;
   readonly conditions: Condition[];

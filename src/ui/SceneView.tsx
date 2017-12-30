@@ -91,7 +91,7 @@ export class SceneView extends React.Component<{
         {filteredChoices.length > 0 && <div className="Scene-Choices">{filteredChoices.map(c =>
           <ChoiceView
             choice={c}
-            key={c.sceneId}
+            key={c.id}
             history={this.props.history}
             game={this.props.game}
             items={this.props.items}

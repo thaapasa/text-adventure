@@ -166,6 +166,7 @@ class GameService {
   private toChoice = (entry: Entry<CChoice>): Choice => {
     debug('Choice', entry);
     return {
+      id: entry.sys.id,
       text: entry.fields.title,
       sceneId: entry.fields.nextScene.sys.id,
       conditions: entry.fields.conditions ? entry.fields.conditions.map(this.toCondition) : [],
