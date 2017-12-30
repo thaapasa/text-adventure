@@ -2,6 +2,9 @@
     white-space: nowrap;
     display: flex;
     justify-content: center;
+    background: #ddd;
+    height: 50px;
+    border-radius: 25px;
 }
 
 .IconBar-expander {
@@ -15,10 +18,19 @@
     overflow: hidden;
 }
 
+.IconBar > .IconBar-icons {
+    transition: width 0.3s ease-in-out;
+    width: 120px;
+}
+
 .IconBar.closed > .IconBar-icons {
     width: 0;
 }
 
 .IconBar .Icon {
     margin-left: 10px;
+}
+
+.IconBar .IconBar-expander .Icon {
+    margin-left: 0px;
 }
