@@ -1,0 +1,22 @@
+.ImageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    display: flex;
+    background: white;
+  }
+
+.ImageOverlay-image {
+    background: #F2F2ED;;
+    width: 10px;
+    flex: 1;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    -webkit-box-shadow: 9px 9px 29px -8px rgba(0,0,0,0.68);
+    -moz-box-shadow: 9px 9px 29px -8px rgba(0,0,0,0.68);
+    box-shadow: 9px 9px 29px -8px rgba(0,0,0,0.68);
+}

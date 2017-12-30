@@ -8,6 +8,7 @@ const colors = {
   textSize: '#d4d386',
   reload: 'rgb(144, 195, 255)',
   book: 'rgb(218, 177, 236)',
+  photo: 'rgb(253, 117, 188)',
 };
 
 type IconAction = () => void;
@@ -65,4 +66,8 @@ export function ReloadIcon({ onClick }: { onClick?: IconAction }) {
 
 export function BookIcon({ onClick }: { onClick?: IconAction }) {
   return <Icon icon={require('../img/icon-book.svg')} onClick={onClick} color={colors.book}/>;
+}
+
+export function PhotoIcon({ onClick }: { onClick?: IconAction }) {
+  return <Icon icon={require('../img/icon-photo.svg')} onClick={onClick} color={colors.photo}/>;
 }

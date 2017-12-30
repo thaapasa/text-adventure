@@ -9,6 +9,7 @@ interface PageProps {
   readonly history: History;
   readonly allowScroll?: boolean;
   readonly resetStory?: () => void;
+  readonly showImage?: () => void;
 }
 
 interface PageState {
@@ -32,6 +33,7 @@ export default class Page extends React.Component<PageProps, PageState> {
             history={this.props.history}
             toggleTextSize={this.toggleTextSize}
             resetStory={this.props.resetStory}
+            showImage={this.props.showImage}
             />
         </div>
         <div className="Page-Content">{this.props.children}</div>

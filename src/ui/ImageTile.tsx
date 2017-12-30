@@ -8,6 +8,12 @@ interface ImageTileProps {
   readonly onClick?: () => void;
 }
 
+const noProps = {};
+
+export function getBackgroundImageStyle(url?: string | null): CSSProperties {
+  return url ? { backgroundImage: `url(${JSON.stringify(url)}` } : noProps;
+}
+
 export class ImageTile extends React.Component<ImageTileProps, {}> {
   public render() {
     return (
@@ -15,7 +21,7 @@ export class ImageTile extends React.Component<ImageTileProps, {}> {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         ...this.props.style,
-        ...(this.props.url ? { backgroundImage: `url(${JSON.stringify(this.props.url)}` } : null),
+        ...getBackgroundImageStyle(this.props.url),
       }}>
         {this.props.children}
       </div>
