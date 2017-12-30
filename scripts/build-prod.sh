@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET_DIR=/var/www/seikkailut.pomeranssi.fi/html
+TARGET_DIR=/var/www/seikkailut.pomeranssi.fi/html-ssl
 BUILD_DIR=./build
 
 pushd . >/dev/null 2>&1
