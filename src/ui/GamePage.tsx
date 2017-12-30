@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './GamePage.css';
-import { Game, Scene } from '../data/Game';
+import { Game, Scene, Item } from '../data/Game';
 import Page from './Page';
 import { gameService } from '../data/GameService';
 import { RouteComponentProps } from 'react-router';
@@ -12,17 +12,20 @@ const debug = require('debug')('game:game-page');
 interface GamePageProps {
   game: Game;
   sceneId: string | undefined;
+  itemIds: string[];
   history: History;
 }
 
 interface GamePageState {
   scene: Scene | null;
+  items: Item[]; 
   shownImage: string | null;
 }
 
 export class GamePage extends React.Component<GamePageProps, GamePageState> {
   public state: GamePageState = {
     scene: null,
+    items: [],
     shownImage: null,
   };
 
@@ -38,7 +41,10 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
     const scene = props.sceneId ?
       await gameService.getScene(props.game, props.sceneId) :
       await gameService.getStart(props.game);
-    this.setState({ scene });
+    this.setState({ scene, items: [] });
+    const items = await Promise.all(this.props.itemIds.map(id => gameService.getItem(id)));
+    debug('Items', items);
+    this.setState({ items });
   }
 
   private resetGame = () => {
@@ -59,7 +65,8 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
         showImage={this.showImage}
       >
         {this.state.scene ?
-          <SceneView game={this.props.game} scene={this.state.scene} history={this.props.history} /> :
+          <SceneView game={this.props.game} scene={this.state.scene}
+            history={this.props.history} items={this.state.items} /> :
           null}
         {this.state.shownImage ? <ImageOverlay image={this.state.shownImage} onClick={this.showImage} /> : null}
       </Page>
@@ -74,12 +81,17 @@ interface RoutedGamePageState {
 interface RoutedGamePageProps {
   gameId: string;
   sceneId: string | undefined;
+  itemIds: string | undefined;
 }
 
 export class RoutedGamePage extends React.Component<RouteComponentProps<RoutedGamePageProps>, RoutedGamePageState> {
   public state: RoutedGamePageState = {
     game: null,
   };
+
+  private getItemIds(): string[] {
+    return this.props.match.params.itemIds ? this.props.match.params.itemIds.split('-') : [];
+  }
 
   public async componentDidMount() {
     debug('Game page', this.props);
@@ -88,8 +100,9 @@ export class RoutedGamePage extends React.Component<RouteComponentProps<RoutedGa
   }
 
   public render() {
-    return this.state.game ?
-      <GamePage game={this.state.game} sceneId={this.props.match.params.sceneId} history={this.props.history} /> :
-      null;
+    return this.state.game ? (
+      <GamePage game={this.state.game} sceneId={this.props.match.params.sceneId}
+        itemIds={this.getItemIds()} history={this.props.history} /> 
+    ) : null;
   }
 }

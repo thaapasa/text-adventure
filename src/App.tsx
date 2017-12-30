@@ -26,6 +26,7 @@ class App extends React.Component<{}, GameState> {
               <Switch>
                 <Route exact={true} path="/" component={GameSelection} />
                 <Route exact={true} path="/g/pelit" component={GameSelection} />
+                <Route exact={true} path="/g/:gameId/:sceneId/:itemIds" component={RoutedGamePage} />
                 <Route exact={true} path="/g/:gameId/:sceneId" component={RoutedGamePage} />
                 <Route exact={true} path="/g/:gameId" component={RoutedGamePage} />
               </Switch>

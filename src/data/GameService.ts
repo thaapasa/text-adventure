@@ -1,4 +1,4 @@
-import { Game, Scene, Choice, Condition, ConditionType, ActionType, Action } from './Game';
+import { Game, Scene, Choice, Condition, ConditionType, ActionType, Action, Item } from './Game';
 import * as contentful from 'contentful';
 import { EntryCollection, Entry } from 'contentful';
 import { Map } from './Types';
@@ -51,6 +51,7 @@ interface CItemAction {
 
 interface CItem {
   readonly name: string;
+  readonly image: Entry<CImage>;
 }
 
 const gameCache: Map<Game> = {};
@@ -89,8 +90,19 @@ class GameService {
     return `/g/${game.id}`;
   }
 
-  public getSceneLink(game: Game, sceneId: string): string {
-    return `/g/${game.id}/${sceneId}`;
+  public getSceneLink(game: Game, sceneId: string, itemIds: string[]): string {
+    const items = itemIds.length > 0 ? '/' + itemIds.join('-') : '';
+    return `/g/${game.id}/${sceneId}${items}`;
+  }
+
+  public async getItem(id: string): Promise<Item> {
+    const items = await client.getEntries({ 'content_type': 'Item', 'sys.id': id, include: 2 });
+    return this.toItem(items.items[0]);
+  }
+
+  private toItem = (x: contentful.Entry<CItem>): Item => {
+    debug('Item', x);
+    return { name: x.fields.name, id: x.sys.id, image: x.fields.image.fields.file.url };
   }
 
   private toGame = (x: contentful.Entry<CGame>, entries: EntryCollection<CGame>): Game => {

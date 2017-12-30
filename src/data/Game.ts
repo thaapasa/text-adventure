@@ -32,6 +32,7 @@ export interface Action {
 export interface Item {
   readonly id: string;
   readonly name: string;
+  readonly image: string;
 }
 
 export interface Choice {

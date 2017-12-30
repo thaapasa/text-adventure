@@ -1,0 +1,24 @@
+.ItemBar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffffaa;
+    border-radius: 10px;
+}
+
+.ItemBar-Image {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-top: 5px;
+}
+
+.ItemBar-Image:first-of-type {
+    margin-top: 0;
+}
