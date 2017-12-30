@@ -38,13 +38,12 @@ export class GamePage extends React.Component<GamePageProps, GamePageState> {
   }
 
   private loadScene = async (props: GamePageProps) => {
+    this.setState({ scene: null, items: [] });
     const scene = props.sceneId ?
       await gameService.getScene(props.game, props.sceneId) :
       await gameService.getStart(props.game);
-    this.setState({ scene, items: [] });
     const items = await Promise.all(this.props.itemIds.map(id => gameService.getItem(id)));
-    debug('Items', items);
-    this.setState({ items });
+    this.setState({ scene, items });
   }
 
   private resetGame = () => {
