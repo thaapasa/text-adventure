@@ -1,35 +1,41 @@
 import * as React from 'react';
 import './IconBar.css';
 import { History } from 'history';
-import { MouseEvent } from 'react';
+import { ChevronLeft, ChevronRight, HomeIcon } from './Icons';
 const debug = require('debug')('game:icon-bar');
 
-interface IconProps {
-  readonly icon: string;
-  readonly onClick?: () => void;
+interface IconBarProps {
+  readonly className?: string;
+  readonly history: History;
 }
 
-class Icon extends React.Component<IconProps, {}> {
-  private onClick = (event: MouseEvent<HTMLImageElement>) => {
-    if (this.props.onClick) { this.props.onClick(); }
-    event.stopPropagation();
-  }
-
-  public render() {
-    return <img className="Icon" src={this.props.icon} onClick={this.onClick} />;
-  }
+interface IconBarState {
+  open: boolean;
 }
 
-export class IconBar extends React.Component<{ className?: string, history: History }, {}> {
+export class IconBar extends React.Component<IconBarProps, IconBarState> {
+  public state: IconBarState = {
+    open: false,
+  };
+
   private goHome = () => {
     debug('Go home');
     this.props.history.push('/g/pelit');
   }
 
+  private toggle = () => {
+    this.setState(s => ({ open: !s.open }));
+  }
+
   public render() {
     return (
-      <div className={'IconBar ' + (this.props.className || '')}>
-        <Icon icon={require('../img/icon-home.png')} onClick={this.goHome} />
+      <div className={'IconBar ' + (this.state.open ? 'open ' : 'closed ') + (this.props.className || '')}>
+        <div className="IconBar-expander">
+          {this.state.open ? <ChevronRight onClick={this.toggle} /> : <ChevronLeft onClick={this.toggle} />}
+        </div>
+        <div className="IconBar-icons">
+          <HomeIcon onClick={this.goHome} />
+        </div>
       </div>
     );
   }

@@ -1,4 +1,24 @@
+.IconBar {
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+}
+
+.IconBar-expander {
+    display: inline-block;
+}
+
+.IconBar-icons {
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.IconBar.closed > .IconBar-icons {
+    width: 0;
+}
+
 .IconBar .Icon {
-  width: 50px;
-  height: 50px;
+    margin-left: 10px;
 }
