@@ -16,6 +16,9 @@ interface PageState {
   allCaps: boolean;
 }
 
+const allowScroll = { overflowY: 'auto' };
+const noStyle = {};
+
 export default class Page extends React.Component<PageProps, PageState> {
   public state: PageState = { allCaps: false };
 
@@ -41,6 +44,3 @@ export default class Page extends React.Component<PageProps, PageState> {
     );
   }
 }
-
-const allowScroll = { overflowY: 'auto' };
-const noStyle = {};
