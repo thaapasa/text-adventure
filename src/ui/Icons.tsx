@@ -6,6 +6,8 @@ const colors = {
   chevron: '#8adba9',
   home: '#3b87f8',
   textSize: '#d4d386',
+  reload: 'rgb(144, 195, 255)',
+  book: 'rgb(218, 177, 236)',
 };
 
 type IconAction = () => void;
@@ -55,4 +57,12 @@ export function ChevronRight({ onClick }: { onClick?: IconAction }) {
 
 export function TextSizeIcon({ onClick }: { onClick?: IconAction }) {
   return <Icon icon={require('../img/icon-text.svg')} onClick={onClick} color={colors.textSize}/>;
+}
+
+export function ReloadIcon({ onClick }: { onClick?: IconAction }) {
+  return <Icon icon={require('../img/icon-reload.svg')} onClick={onClick} color={colors.reload}/>;
+}
+
+export function BookIcon({ onClick }: { onClick?: IconAction }) {
+  return <Icon icon={require('../img/icon-book.svg')} onClick={onClick} color={colors.book}/>;
 }

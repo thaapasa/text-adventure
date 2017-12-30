@@ -7,8 +7,8 @@ interface PageProps {
   readonly title: string;
   readonly className?: string;
   readonly history: History;
-  readonly onTitleClick?: () => void;
   readonly allowScroll?: boolean;
+  readonly resetStory?: () => void;
 }
 
 interface PageState {
@@ -26,9 +26,13 @@ export default class Page extends React.Component<PageProps, PageState> {
     return (
       <div className={'Page ' + (this.state.allCaps ? 'all-caps ' : '') + (this.props.className || '')}
         style={this.props.allowScroll ? allowScroll : noStyle}>
-        <div className="Page-Header" onClick={this.props.onTitleClick}>
+        <div className="Page-Header">
           <div className="Page-Title"><h1>{this.props.title}</h1></div>
-          <IconBar className="Page-Icons" history={this.props.history} toggleTextSize={this.toggleTextSize} />
+          <IconBar className="Page-Icons"
+            history={this.props.history}
+            toggleTextSize={this.toggleTextSize}
+            resetStory={this.props.resetStory}
+            />
         </div>
         <div className="Page-Content">{this.props.children}</div>
       </div>

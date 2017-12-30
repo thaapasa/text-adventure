@@ -20,7 +20,7 @@
 
 .IconBar > .IconBar-icons {
     transition: width 0.3s ease-in-out;
-    width: 120px;
+    width: 240px;
 }
 
 .IconBar.closed > .IconBar-icons {

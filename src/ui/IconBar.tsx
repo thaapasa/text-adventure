@@ -1,12 +1,13 @@
 import * as React from 'react';
 import './IconBar.css';
 import { History } from 'history';
-import { ChevronLeft, ChevronRight, HomeIcon, TextSizeIcon } from './Icons';
+import { ChevronLeft, ChevronRight, HomeIcon, TextSizeIcon, ReloadIcon, BookIcon } from './Icons';
 const debug = require('debug')('game:icon-bar');
 
 interface IconBarProps {
   readonly className?: string;
   readonly history: History;
+  readonly resetStory?: () => void;
   readonly toggleTextSize: () => void;
 }
 
@@ -28,6 +29,10 @@ export class IconBar extends React.Component<IconBarProps, IconBarState> {
     this.setState(s => ({ open: !s.open }));
   }
 
+  private reload = () => {
+    document.location.reload();
+  }
+
   public render() {
     return (
       <div className={'IconBar ' + (this.state.open ? 'open ' : 'closed ') + (this.props.className || '')}>
@@ -36,7 +41,9 @@ export class IconBar extends React.Component<IconBarProps, IconBarState> {
         </div>
         <div className="IconBar-icons">
           <HomeIcon onClick={this.goHome} />
+          <BookIcon onClick={this.props.resetStory} />
           <TextSizeIcon onClick={this.props.toggleTextSize} />
+          <ReloadIcon onClick={this.reload} />
         </div>
       </div>
     );
