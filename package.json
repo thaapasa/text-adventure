@@ -2,6 +2,7 @@
   "name": "text-adventure",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://seikkailut.pomeranssi.fi",
   "dependencies": {
     "contentful": "^5.0.5",
     "debug": "3.1.0",
