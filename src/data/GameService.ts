@@ -1,4 +1,4 @@
-import { Game, Scene, Choice } from './Game';
+import { Game, Scene, Choice, Condition, ConditionType } from './Game';
 import * as contentful from 'contentful';
 import { EntryCollection, Entry } from 'contentful';
 import { Map } from './Types';
@@ -14,29 +14,38 @@ const client = contentful.createClient(auth);
 type CLink = Entry<{}>;
 
 interface CGame {
-  name: string;
-  description: string;
-  startScene: CLink;
-  image: Entry<CImage>;
+  readonly name: string;
+  readonly description: string;
+  readonly startScene: CLink;
+  readonly image: Entry<CImage>;
 }
 
 interface CImage {
-  file: {
-    url: string;
+  readonly file: {
+    readonly url: string;
   };
 }
 
 interface CScene {
-  title: string;
-  description: string;
-  question: string;
-  choices: Entry<CChoice>[];
-  image: Entry<CImage>;
+  readonly title: string;
+  readonly description: string;
+  readonly question: string;
+  readonly choices: Entry<CChoice>[];
+  readonly image: Entry<CImage>;
 }
 
 interface CChoice {
-  title: string;
-  nextScene: CLink;
+  readonly title: string;
+  readonly nextScene: CLink;
+  readonly conditions?: Entry<CItemCondition>[];
+}
+
+interface CItemCondition {
+  readonly item: Entry<CItem>;
+}
+
+interface CItem {
+  readonly name: string;
 }
 
 const gameCache: Map<Game> = {};
@@ -66,7 +75,7 @@ class GameService {
   public async getScene(game: Game, sceneId: string): Promise<Scene> {
     const id = `${game.id}::${sceneId}`;
     if (sceneCache[id]) { return sceneCache[id]; }
-    const scene = await this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 1 }));
+    const scene = await this.toScene(await client.getEntries({ 'sys.id': sceneId, include: 2 }));
     sceneCache[id] = scene;
     return scene;
   }
@@ -105,11 +114,29 @@ class GameService {
     };
   }
 
+  private toConditionType(ctype: string): ConditionType {
+    switch (ctype) {
+      case 'conditionHasItem': return 'hasItem';
+      case 'conditionDoesNotHaveItem': return 'doesNotHaveItem';
+      default: debug('Unknown condition type', ctype); return 'hasItem';
+    }
+  }
+
+  private toCondition = (entry: Entry<CItemCondition>): Condition => {
+    debug('Condition', entry);
+    return {
+      type: this.toConditionType(entry.sys.contentType.sys.id),
+      item: entry.fields.item.sys.id,
+    };
+  }
+
   private toChoice = (entry: Entry<CChoice>): Choice => {
     debug('Choice', entry);
     return {
       text: entry.fields.title,
       sceneId: entry.fields.nextScene.sys.id,
+      conditions: entry.fields.conditions ? entry.fields.conditions.map(this.toCondition) : [],
+      actions: [],
     };
   }
 

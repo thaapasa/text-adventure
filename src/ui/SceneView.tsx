@@ -5,6 +5,7 @@ import { ImageTile } from './ImageTile';
 import { gameService } from '../data/GameService';
 import * as Markdown from 'react-markdown';
 import { History } from 'history';
+const debug = require('debug')('game:scene-view');
 
 class Choice extends React.Component<{ history: History, title: string, link: string }, {}> {
   private selectLink = () => {
@@ -24,6 +25,11 @@ export class SceneView extends React.Component<{
   readonly scene: Scene;
   readonly history: History;
 }, {}> {
+
+  public componentDidMount() {
+    debug('Scene', this.props.scene);
+  }
+
   public render() {
     return (
       <ImageTile className="Scene" url={this.props.scene.image}>
