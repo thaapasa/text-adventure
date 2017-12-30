@@ -18,6 +18,7 @@ function ItemImage({ item }: { item: Item }) {
 export class ItemBar extends React.Component<ItemBarProps, {}> {
 
   public render() {
+    if (this.props.items.length < 1) { return null; }
     return (
       <div className="ItemBar">
         {this.props.items.map(i => <ItemImage item={i} key={i.id} />)}
