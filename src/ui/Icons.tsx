@@ -5,6 +5,7 @@ import { MouseEvent, CSSProperties } from 'react';
 const colors = {
   chevron: '#8adba9',
   home: '#3b87f8',
+  textSize: '#d4d386',
 };
 
 type IconAction = () => void;
@@ -50,4 +51,8 @@ export function ChevronRight({ onClick }: { onClick?: IconAction }) {
     <Icon icon={require('../img/icon-chevron-right.svg')} onClick={onClick}
       imageStyle={{ marginLeft: '-3px' }} color={colors.chevron}/>
   );
+}
+
+export function TextSizeIcon({ onClick }: { onClick?: IconAction }) {
+  return <Icon icon={require('../img/icon-text.svg')} onClick={onClick} color={colors.textSize}/>;
 }

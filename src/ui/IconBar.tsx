@@ -1,12 +1,13 @@
 import * as React from 'react';
 import './IconBar.css';
 import { History } from 'history';
-import { ChevronLeft, ChevronRight, HomeIcon } from './Icons';
+import { ChevronLeft, ChevronRight, HomeIcon, TextSizeIcon } from './Icons';
 const debug = require('debug')('game:icon-bar');
 
 interface IconBarProps {
   readonly className?: string;
   readonly history: History;
+  readonly toggleTextSize: () => void;
 }
 
 interface IconBarState {
@@ -35,6 +36,7 @@ export class IconBar extends React.Component<IconBarProps, IconBarState> {
         </div>
         <div className="IconBar-icons">
           <HomeIcon onClick={this.goHome} />
+          <TextSizeIcon onClick={this.props.toggleTextSize} />
         </div>
       </div>
     );

@@ -3,6 +3,10 @@
     background: white;
 }
 
+.Page.all-caps {
+    text-transform: uppercase;
+}
+
 .Page-Header {
     position: relative;
     padding: 0;

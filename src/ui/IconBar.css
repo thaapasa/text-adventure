@@ -9,7 +9,7 @@
 }
 
 .IconBar-icons {
-    display: inline-block;
+    display: flex;
     width: auto;
     white-space: nowrap;
     overflow: hidden;
