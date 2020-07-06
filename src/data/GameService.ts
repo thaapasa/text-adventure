@@ -63,7 +63,7 @@ const itemCache: Map<Item> = {};
 
 class GameService {
   public async getGames(): Promise<Game[]> {
-    const entries = await client.getEntries({ 'content_type': 'game', include: 1 });
+    const entries = await client.getEntries<CGame>({ 'content_type': 'game', include: 1 });
     const games = entries.items.map(i => this.toGame(i, entries));
     games.forEach(g => gameCache[g.id] = g);
     return games;
@@ -71,7 +71,7 @@ class GameService {
 
   public async getGame(gameId: string): Promise<Game> {
     if (gameCache[gameId]) { return gameCache[gameId]; }
-    const entries = await client.getEntries({ 'content_type': 'game', 'sys.id': gameId, include: 1 });
+    const entries = await client.getEntries<CGame>({ 'content_type': 'game', 'sys.id': gameId, include: 1 });
     const game = entries.items.map(i => this.toGame(i, entries))[0];
     gameCache[gameId] = game;
     return game;
@@ -101,7 +101,7 @@ class GameService {
 
   public async getItem(id: string): Promise<Item> {
     if (itemCache[id]) { return itemCache[id]; }
-    const items = await client.getEntries({ 'content_type': 'Item', 'sys.id': id, include: 2 });
+    const items = await client.getEntries<CItem>({ 'content_type': 'Item', 'sys.id': id, include: 2 });
     const item = this.toItem(items.items[0]);
     itemCache[id] = item;
     return item;
