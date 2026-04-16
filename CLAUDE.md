@@ -7,11 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Package manager is **yarn 4** (Berry, `nodeLinker: node-modules`; see `.yarnrc.yml` and `yarn.lock`).
 
 - `yarn start` — Vite dev server on http://localhost:5173
-- `yarn build` — runs `tsc --noEmit` then `vite build`; output goes to `./build`
+- `yarn build` — runs `tsc --noEmit` then `vite build`; output goes to `./site` (see note in `vite.config.ts` `outDir`)
 - `yarn preview` — serve the production build locally
 - `yarn test` — Vitest (jsdom); pass `--run` for one-shot, e.g. `yarn test --run src/App.test.tsx`
 - `yarn lint` — ESLint 9 flat config (`eslint.config.js`)
-- `scripts/build-prod.sh` — git pull, `yarn install && yarn build`, deploy `./build` to `/var/www/seikkailut.pomeranssi.fi/html-ssl` on the server
+- `scripts/build.sh` — `yarn install --immutable && yarn build`; output in `./site`
+
+## Deployment
+
+The `./site` directory is **committed to this repo**. The VM host checks out the repo and serves `./site` directly from disk — there is no remote build step. Rebuild locally (or in CI) with `scripts/build.sh`, commit the updated `./site`, and push.
 
 Stack: Vite 8, React 19, TypeScript 6, react-router-dom 7. No create-react-app, no TSLint, no Jest.
 
