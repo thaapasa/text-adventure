@@ -7,6 +7,15 @@ export default defineConfig({
     outDir: 'site',
     emptyOutDir: true,
   },
+  server: {
+    proxy: {
+      '/contentful': {
+        target: 'https://cdn.contentful.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/contentful/, ''),
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
