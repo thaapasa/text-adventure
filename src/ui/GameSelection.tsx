@@ -1,51 +1,58 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import debug from 'debug';
 import './GameSelection.css';
 import Page from './Page';
 import { Game } from '../data/Game';
 import { gameService } from '../data/GameService';
 import { ImageTile } from './ImageTile';
-import { History } from 'history';
-import { RouteComponentProps } from 'react-router';
-const debug = require('debug')('game:selection');
+import { NavigateFn } from './GamePage';
 
-interface GameSelectionState {
-  games: Game[]; 
-}
+const log = debug('game:selection');
 
-class GameIcon extends React.Component<Game & { history: History }, {}> {
-  private selectGame = () => {
-    if (this.props.startSceneId) {
-      this.props.history.push(gameService.getGameLink(this.props));
+function GameIcon({ game, navigate }: { game: Game; navigate: NavigateFn }) {
+  const selectGame = () => {
+    if (game.startSceneId) {
+      navigate(gameService.getGameLink(game));
     }
-  }
-  public render() {
-    return (
-      <ImageTile className="Game" url={this.props.image} onClick={this.selectGame}>
-        <h2 className="GameTitle">{this.props.name}</h2>
-      </ImageTile>
-    );
-  }
+  };
+  return (
+    <ImageTile className="Game" url={game.image} onClick={selectGame}>
+      <h2 className="GameTitle">{game.name}</h2>
+    </ImageTile>
+  );
 }
 
-export default class GameSelection extends React.Component<RouteComponentProps<{}>, GameSelectionState> {
-  public state: GameSelectionState = {
-    games: [],
-  };
+export default function GameSelection() {
+  const [games, setGames] = useState<Game[]>([]);
+  const rrNavigate = useNavigate();
+  const navigate: NavigateFn = (path) => rrNavigate(path);
 
-  public async componentWillMount() {
-    const games = await gameService.getGames();
-    this.setState({ games });
-    debug('Game list', games);
-  }
+  useEffect(() => {
+    let cancelled = false;
+    gameService.getGames().then((loaded) => {
+      if (!cancelled) {
+        setGames(loaded);
+        log('Game list', loaded);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  public render() {
-    return (
-      <Page title="Pelit" className="GameSelection" history={this.props.history} allowScroll={true}>
-        <div className="GameIconArea">
-          {this.state.games.map(g =>
-            <GameIcon {...g} key={g.id} history={this.props.history} />)}
-        </div>
-      </Page>
-    );
-  }
+  return (
+    <Page
+      title="Pelit"
+      className="GameSelection"
+      navigate={navigate}
+      allowScroll={true}
+    >
+      <div className="GameIconArea">
+        {games.map((g) => (
+          <GameIcon game={g} key={g.id} navigate={navigate} />
+        ))}
+      </div>
+    </Page>
+  );
 }

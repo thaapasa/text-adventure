@@ -1,6 +1,12 @@
-import * as React from 'react';
+import { Component, CSSProperties, MouseEvent } from 'react';
 import './Icons.css';
-import { MouseEvent, CSSProperties } from 'react';
+import iconHome from '../img/icon-home.svg';
+import iconChevronLeft from '../img/icon-chevron-left.svg';
+import iconChevronRight from '../img/icon-chevron-right.svg';
+import iconText from '../img/icon-text.svg';
+import iconReload from '../img/icon-reload.svg';
+import iconBook from '../img/icon-book.svg';
+import iconPhoto from '../img/icon-photo.svg';
 
 const colors = {
   chevron: '#8adba9',
@@ -19,18 +25,29 @@ interface IconProps {
   readonly imageStyle?: CSSProperties;
   readonly color?: string;
 }
-  
-export class Icon extends React.Component<IconProps, {}> {
+
+export class Icon extends Component<IconProps> {
   private onClick = (event: MouseEvent<HTMLImageElement>) => {
-    if (this.props.onClick) { this.props.onClick(); }
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
     event.stopPropagation();
-  }
+  };
 
   public render() {
-    
     return (
-      <div className="Icon" style={this.props.color ? { backgroundColor: this.props.color } : {}}>
-        <img className="Icon-Image" src={this.props.icon} onClick={this.onClick} style={this.props.imageStyle} />
+      <div
+        className="Icon"
+        style={
+          this.props.color ? { backgroundColor: this.props.color } : {}
+        }
+      >
+        <img
+          className="Icon-Image"
+          src={this.props.icon}
+          onClick={this.onClick}
+          style={this.props.imageStyle}
+        />
       </div>
     );
   }
@@ -39,35 +56,45 @@ export class Icon extends React.Component<IconProps, {}> {
 export default Icon;
 
 export function HomeIcon({ onClick }: { onClick?: IconAction }) {
-  return <Icon icon={require('../img/icon-home.svg')} onClick={onClick} color={colors.home}/>;
+  return <Icon icon={iconHome} onClick={onClick} color={colors.home} />;
 }
 
 export function ChevronLeft({ onClick }: { onClick?: IconAction }) {
   return (
-    <Icon icon={require('../img/icon-chevron-left.svg')} onClick={onClick}
-      imageStyle={{ marginLeft: '-3px' }} color={colors.chevron}/>
+    <Icon
+      icon={iconChevronLeft}
+      onClick={onClick}
+      imageStyle={{ marginLeft: '-3px' }}
+      color={colors.chevron}
+    />
   );
 }
 
 export function ChevronRight({ onClick }: { onClick?: IconAction }) {
   return (
-    <Icon icon={require('../img/icon-chevron-right.svg')} onClick={onClick}
-      imageStyle={{ marginLeft: '-3px' }} color={colors.chevron}/>
+    <Icon
+      icon={iconChevronRight}
+      onClick={onClick}
+      imageStyle={{ marginLeft: '-3px' }}
+      color={colors.chevron}
+    />
   );
 }
 
 export function TextSizeIcon({ onClick }: { onClick?: IconAction }) {
-  return <Icon icon={require('../img/icon-text.svg')} onClick={onClick} color={colors.textSize}/>;
+  return (
+    <Icon icon={iconText} onClick={onClick} color={colors.textSize} />
+  );
 }
 
 export function ReloadIcon({ onClick }: { onClick?: IconAction }) {
-  return <Icon icon={require('../img/icon-reload.svg')} onClick={onClick} color={colors.reload}/>;
+  return <Icon icon={iconReload} onClick={onClick} color={colors.reload} />;
 }
 
 export function BookIcon({ onClick }: { onClick?: IconAction }) {
-  return <Icon icon={require('../img/icon-book.svg')} onClick={onClick} color={colors.book}/>;
+  return <Icon icon={iconBook} onClick={onClick} color={colors.book} />;
 }
 
 export function PhotoIcon({ onClick }: { onClick?: IconAction }) {
-  return <Icon icon={require('../img/icon-photo.svg')} onClick={onClick} color={colors.photo}/>;
+  return <Icon icon={iconPhoto} onClick={onClick} color={colors.photo} />;
 }

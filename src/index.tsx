@@ -1,11 +1,18 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { registerCleanupServiceWorker } from './serviceWorkerCleanup';
 import './index.css';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('Root element not found');
+}
+
+createRoot(container).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
 );
-registerServiceWorker();
+
+registerCleanupServiceWorker();

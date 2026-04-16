@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Component } from 'react';
 import './ImageOverlay.css';
 import { getBackgroundImageStyle } from './ImageTile';
 
@@ -7,16 +7,20 @@ interface ImageOverlayProps {
   onClick?: () => void;
 }
 
-export class ImageOverlay extends React.Component<ImageOverlayProps, {}> {
-
+export class ImageOverlay extends Component<ImageOverlayProps> {
   private click = () => {
-    if (this.props.onClick) { this.props.onClick(); }
-  }
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
+  };
 
   public render() {
     return (
       <div className="ImageOverlay" onClick={this.click}>
-        <div className="ImageOverlay-image" style={getBackgroundImageStyle(this.props.image)} />
+        <div
+          className="ImageOverlay-image"
+          style={getBackgroundImageStyle(this.props.image)}
+        />
       </div>
     );
   }

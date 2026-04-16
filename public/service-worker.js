@@ -1,0 +1,19 @@
+// Self-destructing service worker. Its sole job is to replace any
+// previously-installed SW (e.g. the old CRA precache worker) and then
+// unregister itself so clients stop receiving stale cached content.
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map((name) => caches.delete(name)));
+      await self.registration.unregister();
+      const clientsList = await self.clients.matchAll({ type: 'window' });
+      clientsList.forEach((client) => client.navigate(client.url));
+    })(),
+  );
+});

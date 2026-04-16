@@ -1,28 +1,32 @@
-import * as React from 'react';
-import { CSSProperties } from 'react';
+import { Component, CSSProperties, ReactNode } from 'react';
 
 interface ImageTileProps {
   readonly url?: string | null;
   readonly style?: CSSProperties;
   readonly className?: string;
   readonly onClick?: () => void;
+  readonly children?: ReactNode;
 }
 
 const noProps = {};
 
 export function getBackgroundImageStyle(url?: string | null): CSSProperties {
-  return url ? { backgroundImage: `url(${JSON.stringify(url)}` } : noProps;
+  return url ? { backgroundImage: `url(${JSON.stringify(url)})` } : noProps;
 }
 
-export class ImageTile extends React.Component<ImageTileProps, {}> {
+export class ImageTile extends Component<ImageTileProps> {
   public render() {
     return (
-      <div className={this.props.className} onClick={this.props.onClick} style={{
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        ...this.props.style,
-        ...getBackgroundImageStyle(this.props.url),
-      }}>
+      <div
+        className={this.props.className}
+        onClick={this.props.onClick}
+        style={{
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          ...this.props.style,
+          ...getBackgroundImageStyle(this.props.url),
+        }}
+      >
         {this.props.children}
       </div>
     );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Component } from 'react';
 import './ItemBar.css';
 import { Item } from '../data/Game';
 import { getBackgroundImageStyle } from './ImageTile';
@@ -10,18 +10,22 @@ interface ItemBarProps {
 function ItemImage({ item }: { item: Item }) {
   return (
     <div className="ItemBar-Item">
-      <div className="ItemBar-Image" style={getBackgroundImageStyle(item.image)} />
+      <div
+        className="ItemBar-Image"
+        style={getBackgroundImageStyle(item.image)}
+      />
     </div>
   );
 }
 
-export class ItemBar extends React.Component<ItemBarProps, {}> {
-
+export class ItemBar extends Component<ItemBarProps> {
   public render() {
-    if (this.props.items.length < 1) { return null; }
+    if (this.props.items.length < 1) {
+      return null;
+    }
     return (
       <div className="ItemBar">
-        {this.props.items.map(i => <ItemImage item={i} key={i.id} />)}
+        {this.props.items.map((i) => <ItemImage item={i} key={i.id} />)}
       </div>
     );
   }

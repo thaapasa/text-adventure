@@ -11,7 +11,8 @@ echo 'Fetching changes from git...'
 git pull || exit -1
 
 echo 'Building app...'
-npm run build || exit -1
+yarn install || exit -1
+yarn build || exit -1
 
 echo 'Deploying app'
 rm -rf $TARGET_DIR/*
