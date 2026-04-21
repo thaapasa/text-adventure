@@ -6,7 +6,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
-    ignores: ['build/**', 'node_modules/**', 'public/**'],
+    ignores: ['site/**', 'node_modules/**', 'public/**'],
   },
   js.configs.recommended,
   {
@@ -26,6 +26,7 @@ export default [
         console: 'readonly',
         HTMLElement: 'readonly',
         HTMLImageElement: 'readonly',
+        MediaQueryList: 'readonly',
         MouseEvent: 'readonly',
       },
     },

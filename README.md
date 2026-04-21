@@ -1,13 +1,19 @@
 # Text Adventure
 
-A small Finnish-language branching text adventure for kids, deployed at [seikkailut.pomeranssi.fi](https://seikkailut.pomeranssi.fi).
+A small Finnish-language branching text adventure for kids, deployed at
+[seikkailut.pomeranssi.fi](https://seikkailut.pomeranssi.fi).
 
-The player moves between scenes by picking choices. Scenes, choices, items, and item-based conditions/actions are all authored in [Contentful](https://www.contentful.com/) — this repo is just the rendering shell. The player's current scene and inventory are encoded in the URL, so progress survives reloads and can be shared as a link.
+The player moves between scenes by picking choices. Scenes, choices, items, and item-based
+conditions/actions are all authored in [Contentful](https://www.contentful.com/) — this repo is just
+the rendering shell. The player's current scene and inventory are encoded in the URL, so progress
+survives reloads and can be shared as a link.
 
 ## Tech
 
-- [Vite](https://vitejs.dev/) + [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [react-router-dom 7](https://reactrouter.com/) for routing (hash router when installed as a PWA, browser router otherwise)
+- [Vite](https://vitejs.dev/) + [React 19](https://react.dev/) +
+  [TypeScript](https://www.typescriptlang.org/)
+- [react-router-dom 7](https://reactrouter.com/) for routing (hash router when installed as a PWA,
+  browser router otherwise)
 - [Contentful](https://www.contentful.com/) SDK for content
 - [Vitest](https://vitest.dev/) for tests, [ESLint 9](https://eslint.org/) for linting
 - Yarn 4 (Berry)
@@ -24,7 +30,8 @@ yarn build     # produces ./site
 
 ## Deployment
 
-The production build in `./site` is **committed to the repo**. The VM host checks out this repo and serves `./site` directly from disk — there's no remote build step. To ship a change:
+The production build in `./site` is **committed to the repo**. The VM host checks out this repo and
+serves `./site` directly from disk — there's no remote build step. To ship a change:
 
 ```sh
 scripts/build.sh    # runs yarn install --immutable && yarn build
