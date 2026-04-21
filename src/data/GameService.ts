@@ -14,17 +14,10 @@ import { Map } from './Types';
 
 const log = debug('game:service');
 
-// In production the app is served from seikkailut.pomeranssi.fi, where the
-// reverse proxy forwards /contentful/* to cdn.contentful.com — so requests
-// are same-origin there. In dev, Vite's server.proxy does the same forwarding
-// locally (see vite.config.ts).
 const client: ContentfulClientApi<undefined> = createClient({
   space: '534nukjx9idr',
   accessToken:
     '6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249',
-  host: import.meta.env.DEV ? 'localhost:5173' : 'seikkailut.pomeranssi.fi',
-  insecure: import.meta.env.DEV,
-  basePath: 'contentful',
 });
 
 type CEntry = {
