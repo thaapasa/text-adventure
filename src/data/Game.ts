@@ -15,14 +15,14 @@ export interface Scene {
   readonly choices?: Choice[];
 }
 
-export type ConditionType = 'hasItem' | 'doesNotHaveItem';
+export type ConditionType = "hasItem" | "doesNotHaveItem";
 
 export interface Condition {
   readonly type: ConditionType;
   readonly item: string;
 }
 
-export type ActionType = 'receiveItem' | 'loseItem';
+export type ActionType = "receiveItem" | "loseItem";
 
 export interface Action {
   readonly type: ActionType;

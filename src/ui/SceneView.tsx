@@ -1,14 +1,14 @@
-import { Component } from 'react';
-import Markdown from 'react-markdown';
-import debug from 'debug';
-import './SceneView.css';
-import { Action, Choice, Condition, Game, Item, Scene } from '../data/Game';
-import { gameService } from '../data/GameService';
-import { ImageTile } from './ImageTile';
-import { ItemBar } from './ItemBar';
-import { NavigateFn } from './GamePage';
+import { Component } from "react";
+import Markdown from "react-markdown";
+import debug from "debug";
+import "./SceneView.css";
+import { Action, Choice, Condition, Game, Item, Scene } from "../data/Game";
+import { gameService } from "../data/GameService";
+import { ImageTile } from "./ImageTile";
+import { ItemBar } from "./ItemBar";
+import { NavigateFn } from "./GamePage";
 
-const log = debug('game:scene-view');
+const log = debug("game:scene-view");
 
 interface ChoiceViewProps {
   readonly choice: Choice;
@@ -19,13 +19,13 @@ interface ChoiceViewProps {
 
 class ChoiceView extends Component<ChoiceViewProps> {
   private filterItems = (action: Action, items: string[]): string[] => {
-    log('Action', action);
+    log("Action", action);
     switch (action.type) {
-      case 'receiveItem':
+      case "receiveItem":
         return items.find((i) => i === action.item) !== undefined
           ? items
           : items.concat([action.item]);
-      case 'loseItem':
+      case "loseItem":
         return items.filter((i) => i !== action.item);
       default:
         return items;
@@ -39,7 +39,7 @@ class ChoiceView extends Component<ChoiceViewProps> {
         items = this.filterItems(a, items);
       });
     }
-    log('Filtered items', items);
+    log("Filtered items", items);
     const link = gameService.getSceneLink(
       this.props.game,
       this.props.choice.sceneId,
@@ -68,7 +68,7 @@ interface SceneViewProps {
 
 export class SceneView extends Component<SceneViewProps> {
   public componentDidMount() {
-    log('Scene', this.props.scene, this.props.items);
+    log("Scene", this.props.scene, this.props.items);
   }
 
   private hasItem = (itemId: string): boolean =>
@@ -76,9 +76,9 @@ export class SceneView extends Component<SceneViewProps> {
 
   private matchCondition = (condition: Condition): boolean => {
     switch (condition.type) {
-      case 'hasItem':
+      case "hasItem":
         return this.hasItem(condition.item);
-      case 'doesNotHaveItem':
+      case "doesNotHaveItem":
         return !this.hasItem(condition.item);
       default:
         return false;

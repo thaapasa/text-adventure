@@ -1,4 +1,4 @@
-import { Component, CSSProperties, ReactNode } from 'react';
+import { Component, CSSProperties, ReactNode } from "react";
 
 interface ImageTileProps {
   readonly url?: string | null;
@@ -21,8 +21,8 @@ export class ImageTile extends Component<ImageTileProps> {
         className={this.props.className}
         onClick={this.props.onClick}
         style={{
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           ...this.props.style,
           ...getBackgroundImageStyle(this.props.url),
         }}

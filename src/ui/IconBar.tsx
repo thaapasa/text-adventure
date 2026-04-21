@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import debug from 'debug';
-import './IconBar.css';
+import { Component } from "react";
+import debug from "debug";
+import "./IconBar.css";
 import {
   BookIcon,
   ChevronLeft,
@@ -9,10 +9,10 @@ import {
   PhotoIcon,
   ReloadIcon,
   TextSizeIcon,
-} from './Icons';
-import { NavigateFn } from './GamePage';
+} from "./Icons";
+import { NavigateFn } from "./GamePage";
 
-const log = debug('game:icon-bar');
+const log = debug("game:icon-bar");
 
 interface IconBarProps {
   readonly className?: string;
@@ -32,8 +32,8 @@ export class IconBar extends Component<IconBarProps, IconBarState> {
   };
 
   private goHome = () => {
-    log('Go home');
-    this.props.navigate('/g/pelit');
+    log("Go home");
+    this.props.navigate("/g/pelit");
   };
 
   private toggle = () => {
@@ -49,9 +49,9 @@ export class IconBar extends Component<IconBarProps, IconBarState> {
     return (
       <div
         className={
-          'IconBar ' +
-          (this.state.open ? 'open ' : 'closed ') +
-          (this.props.className || '')
+          "IconBar " +
+          (this.state.open ? "open " : "closed ") +
+          (this.props.className || "")
         }
       >
         <div className="IconBar-expander">

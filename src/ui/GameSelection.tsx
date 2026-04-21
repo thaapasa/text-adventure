@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import debug from 'debug';
-import './GameSelection.css';
-import Page from './Page';
-import { Game } from '../data/Game';
-import { gameService } from '../data/GameService';
-import { ImageTile } from './ImageTile';
-import { NavigateFn } from './GamePage';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import debug from "debug";
+import "./GameSelection.css";
+import Page from "./Page";
+import { Game } from "../data/Game";
+import { gameService } from "../data/GameService";
+import { ImageTile } from "./ImageTile";
+import { NavigateFn } from "./GamePage";
 
-const log = debug('game:selection');
+const log = debug("game:selection");
 
 function GameIcon({ game, navigate }: { game: Game; navigate: NavigateFn }) {
   const selectGame = () => {
@@ -33,7 +33,7 @@ export default function GameSelection() {
     gameService.getGames().then((loaded) => {
       if (!cancelled) {
         setGames(loaded);
-        log('Game list', loaded);
+        log("Game list", loaded);
       }
     });
     return () => {

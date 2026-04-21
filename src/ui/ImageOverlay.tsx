@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import './ImageOverlay.css';
-import { getBackgroundImageStyle } from './ImageTile';
+import { Component } from "react";
+import "./ImageOverlay.css";
+import { getBackgroundImageStyle } from "./ImageTile";
 
 interface ImageOverlayProps {
   image: string;

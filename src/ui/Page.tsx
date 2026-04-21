@@ -1,7 +1,7 @@
-import { Component, CSSProperties, ReactNode } from 'react';
-import './Page.css';
-import { IconBar } from './IconBar';
-import { NavigateFn } from './GamePage';
+import { Component, CSSProperties, ReactNode } from "react";
+import "./Page.css";
+import { IconBar } from "./IconBar";
+import { NavigateFn } from "./GamePage";
 
 interface PageProps {
   readonly title: string;
@@ -17,7 +17,7 @@ interface PageState {
   allCaps: boolean;
 }
 
-const scrollStyle: CSSProperties = { overflowY: 'auto' };
+const scrollStyle: CSSProperties = { overflowY: "auto" };
 const noStyle: CSSProperties = {};
 
 export default class Page extends Component<PageProps, PageState> {
@@ -31,9 +31,9 @@ export default class Page extends Component<PageProps, PageState> {
     return (
       <div
         className={
-          'Page ' +
-          (this.state.allCaps ? 'all-caps ' : '') +
-          (this.props.className || '')
+          "Page " +
+          (this.state.allCaps ? "all-caps " : "") +
+          (this.props.className || "")
         }
         style={this.props.allowScroll ? scrollStyle : noStyle}
       >

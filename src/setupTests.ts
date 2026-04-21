@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // jsdom does not implement matchMedia. The app uses it to detect PWA mode.
-if (typeof window !== 'undefined' && !window.matchMedia) {
+if (typeof window !== "undefined" && !window.matchMedia) {
   window.matchMedia = (query: string) =>
     ({
       matches: false,

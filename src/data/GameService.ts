@@ -1,5 +1,5 @@
-import { createClient, type ContentfulClientApi } from 'contentful';
-import debug from 'debug';
+import { createClient, type ContentfulClientApi } from "contentful";
+import debug from "debug";
 import {
   Action,
   ActionType,
@@ -9,15 +9,15 @@ import {
   Game,
   Item,
   Scene,
-} from './Game';
-import { Map } from './Types';
+} from "./Game";
+import { Map } from "./Types";
 
-const log = debug('game:service');
+const log = debug("game:service");
 
 const client: ContentfulClientApi<undefined> = createClient({
-  space: '534nukjx9idr',
+  space: "534nukjx9idr",
   accessToken:
-    '6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249',
+    "6cad7cd294a9be7b48bb087d799f6bd71fdd3b32c16ca63da69a4a224c558249",
 });
 
 type CEntry = {
@@ -34,7 +34,7 @@ const itemCache: Map<Item> = {};
 class GameService {
   public async getGames(): Promise<Game[]> {
     const entries = (await client.getEntries({
-      content_type: 'game',
+      content_type: "game",
       include: 1,
     })) as unknown as { items: CEntry[] };
     const games = entries.items.map((i) => this.toGame(i));
@@ -47,8 +47,8 @@ class GameService {
       return gameCache[gameId];
     }
     const entries = (await client.getEntries({
-      content_type: 'game',
-      'sys.id': gameId,
+      content_type: "game",
+      "sys.id": gameId,
       include: 1,
     })) as unknown as { items: CEntry[] };
     const game = entries.items.map((i) => this.toGame(i))[0];
@@ -58,7 +58,7 @@ class GameService {
 
   public async getStart(game: Game): Promise<Scene> {
     if (!game.startSceneId) {
-      throw new Error('no game');
+      throw new Error("no game");
     }
     return this.getScene(game, game.startSceneId);
   }
@@ -69,7 +69,7 @@ class GameService {
       return sceneCache[id];
     }
     const result = (await client.getEntries({
-      'sys.id': sceneId,
+      "sys.id": sceneId,
       include: 2,
     })) as unknown as { items: CEntry[] };
     const scene = this.toScene(result.items[0]);
@@ -81,12 +81,8 @@ class GameService {
     return `/g/${game.id}`;
   }
 
-  public getSceneLink(
-    game: Game,
-    sceneId: string,
-    itemIds: string[],
-  ): string {
-    const items = itemIds.length > 0 ? '/' + itemIds.join('-') : '';
+  public getSceneLink(game: Game, sceneId: string, itemIds: string[]): string {
+    const items = itemIds.length > 0 ? "/" + itemIds.join("-") : "";
     return `/g/${game.id}/${sceneId}${items}`;
   }
 
@@ -95,8 +91,8 @@ class GameService {
       return itemCache[id];
     }
     const items = (await client.getEntries({
-      content_type: 'Item',
-      'sys.id': id,
+      content_type: "Item",
+      "sys.id": id,
       include: 2,
     })) as unknown as { items: CEntry[] };
     const item = this.toItem(items.items[0]);
@@ -105,14 +101,14 @@ class GameService {
   }
 
   private toItem = (x: CEntry): Item => {
-    log('Item', x);
+    log("Item", x);
     const name = x.fields.name as string;
     const image = x.fields.image as CFile;
     return { name, id: x.sys.id, image: image.fields.file.url };
   };
 
   private toGame = (x: CEntry): Game => {
-    log('Game', x);
+    log("Game", x);
     const startScene = x.fields.startScene as CEntry | undefined;
     const image = x.fields.image as CFile | undefined;
     return {
@@ -125,9 +121,9 @@ class GameService {
   };
 
   private toScene = (x: CEntry | undefined): Scene => {
-    log('Scene', x);
+    log("Scene", x);
     if (!x) {
-      throw new Error('No scene');
+      throw new Error("No scene");
     }
     const rawChoices = (x.fields.choices as CEntry[] | undefined) ?? [];
     const choices: Choice[] = rawChoices.map(this.toChoice);
@@ -144,18 +140,18 @@ class GameService {
 
   private toConditionType(ctype: string): ConditionType {
     switch (ctype) {
-      case 'conditionHasItem':
-        return 'hasItem';
-      case 'conditionDoesNotHaveItem':
-        return 'doesNotHaveItem';
+      case "conditionHasItem":
+        return "hasItem";
+      case "conditionDoesNotHaveItem":
+        return "doesNotHaveItem";
       default:
-        log('Unknown condition type', ctype);
-        return 'hasItem';
+        log("Unknown condition type", ctype);
+        return "hasItem";
     }
   }
 
   private toCondition = (entry: CEntry): Condition => {
-    log('Condition', entry);
+    log("Condition", entry);
     const item = entry.fields.item as CEntry;
     return {
       type: this.toConditionType(entry.sys.contentType.sys.id),
@@ -165,18 +161,18 @@ class GameService {
 
   private toActionType(ctype: string): ActionType {
     switch (ctype) {
-      case 'actionLoseItem':
-        return 'loseItem';
-      case 'actionReceiveItem':
-        return 'receiveItem';
+      case "actionLoseItem":
+        return "loseItem";
+      case "actionReceiveItem":
+        return "receiveItem";
       default:
-        log('Unknown action type', ctype);
-        return 'receiveItem';
+        log("Unknown action type", ctype);
+        return "receiveItem";
     }
   }
 
   private toAction = (entry: CEntry): Action => {
-    log('Action', entry);
+    log("Action", entry);
     const item = entry.fields.item as CEntry;
     return {
       type: this.toActionType(entry.sys.contentType.sys.id),
@@ -185,10 +181,9 @@ class GameService {
   };
 
   private toChoice = (entry: CEntry): Choice => {
-    log('Choice', entry);
+    log("Choice", entry);
     const nextScene = entry.fields.nextScene as CEntry;
-    const conditions =
-      (entry.fields.conditions as CEntry[] | undefined) ?? [];
+    const conditions = (entry.fields.conditions as CEntry[] | undefined) ?? [];
     const actions = (entry.fields.actions as CEntry[] | undefined) ?? [];
     return {
       id: entry.sys.id,

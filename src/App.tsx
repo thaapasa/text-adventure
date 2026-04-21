@@ -1,11 +1,11 @@
-import './App.css';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
-import GameSelection from './ui/GameSelection';
-import { RoutedGamePage } from './ui/GamePage';
+import "./App.css";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import GameSelection from "./ui/GameSelection";
+import { RoutedGamePage } from "./ui/GamePage";
 
 const isStandalone =
-  typeof window !== 'undefined' &&
-  window.matchMedia('(display-mode: standalone)').matches;
+  typeof window !== "undefined" &&
+  window.matchMedia("(display-mode: standalone)").matches;
 
 const Router = isStandalone ? HashRouter : BrowserRouter;
 

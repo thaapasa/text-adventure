@@ -1,20 +1,20 @@
-import { Component, CSSProperties, MouseEvent } from 'react';
-import './Icons.css';
-import iconHome from '../img/icon-home.svg';
-import iconChevronLeft from '../img/icon-chevron-left.svg';
-import iconChevronRight from '../img/icon-chevron-right.svg';
-import iconText from '../img/icon-text.svg';
-import iconReload from '../img/icon-reload.svg';
-import iconBook from '../img/icon-book.svg';
-import iconPhoto from '../img/icon-photo.svg';
+import { Component, CSSProperties, MouseEvent } from "react";
+import "./Icons.css";
+import iconHome from "../img/icon-home.svg";
+import iconChevronLeft from "../img/icon-chevron-left.svg";
+import iconChevronRight from "../img/icon-chevron-right.svg";
+import iconText from "../img/icon-text.svg";
+import iconReload from "../img/icon-reload.svg";
+import iconBook from "../img/icon-book.svg";
+import iconPhoto from "../img/icon-photo.svg";
 
 const colors = {
-  chevron: '#8adba9',
-  home: '#3b87f8',
-  textSize: 'rgb(224, 222, 83)',
-  reload: 'rgb(144, 195, 255)',
-  book: 'rgb(218, 177, 236)',
-  photo: 'rgb(253, 117, 188)',
+  chevron: "#8adba9",
+  home: "#3b87f8",
+  textSize: "rgb(224, 222, 83)",
+  reload: "rgb(144, 195, 255)",
+  book: "rgb(218, 177, 236)",
+  photo: "rgb(253, 117, 188)",
 };
 
 type IconAction = () => void;
@@ -38,9 +38,7 @@ export class Icon extends Component<IconProps> {
     return (
       <div
         className="Icon"
-        style={
-          this.props.color ? { backgroundColor: this.props.color } : {}
-        }
+        style={this.props.color ? { backgroundColor: this.props.color } : {}}
       >
         <img
           className="Icon-Image"
@@ -64,7 +62,7 @@ export function ChevronLeft({ onClick }: { onClick?: IconAction }) {
     <Icon
       icon={iconChevronLeft}
       onClick={onClick}
-      imageStyle={{ marginLeft: '-3px' }}
+      imageStyle={{ marginLeft: "-3px" }}
       color={colors.chevron}
     />
   );
@@ -75,16 +73,14 @@ export function ChevronRight({ onClick }: { onClick?: IconAction }) {
     <Icon
       icon={iconChevronRight}
       onClick={onClick}
-      imageStyle={{ marginLeft: '-3px' }}
+      imageStyle={{ marginLeft: "-3px" }}
       color={colors.chevron}
     />
   );
 }
 
 export function TextSizeIcon({ onClick }: { onClick?: IconAction }) {
-  return (
-    <Icon icon={iconText} onClick={onClick} color={colors.textSize} />
-  );
+  return <Icon icon={iconText} onClick={onClick} color={colors.textSize} />;
 }
 
 export function ReloadIcon({ onClick }: { onClick?: IconAction }) {

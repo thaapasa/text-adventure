@@ -1,14 +1,14 @@
-import { Component } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import debug from 'debug';
-import './GamePage.css';
-import { Game, Item, Scene } from '../data/Game';
-import { gameService } from '../data/GameService';
-import Page from './Page';
-import { SceneView } from './SceneView';
-import { ImageOverlay } from './ImageOverlay';
+import { Component } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import debug from "debug";
+import "./GamePage.css";
+import { Game, Item, Scene } from "../data/Game";
+import { gameService } from "../data/GameService";
+import Page from "./Page";
+import { SceneView } from "./SceneView";
+import { ImageOverlay } from "./ImageOverlay";
 
-const log = debug('game:game-page');
+const log = debug("game:game-page");
 
 export type NavigateFn = (path: string) => void;
 
@@ -40,7 +40,7 @@ export class GamePage extends Component<GamePageProps, GamePageState> {
     if (
       prev.sceneId !== this.props.sceneId ||
       prev.game.id !== this.props.game.id ||
-      prev.itemIds.join('-') !== this.props.itemIds.join('-')
+      prev.itemIds.join("-") !== this.props.itemIds.join("-")
     ) {
       await this.loadScene(this.props);
     }
@@ -108,7 +108,7 @@ class RoutedGamePageHost extends Component<
   public state = { game: null as Game | null };
 
   public async componentDidMount() {
-    log('Game page', this.props);
+    log("Game page", this.props);
     const game = await gameService.getGame(this.props.gameId);
     this.setState({ game });
   }
@@ -139,7 +139,7 @@ export function RoutedGamePage() {
     itemIds?: string;
   }>();
   const navigate = useNavigate();
-  const itemIds = params.itemIds ? params.itemIds.split('-') : [];
+  const itemIds = params.itemIds ? params.itemIds.split("-") : [];
   if (!params.gameId) {
     return null;
   }

@@ -4,14 +4,12 @@
 // the cleanup SW once, future loads have no SW at all.
 
 export function registerCleanupServiceWorker(): void {
-  if (!('serviceWorker' in navigator)) {
+  if (!("serviceWorker" in navigator)) {
     return;
   }
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .catch((err) => {
-        console.warn('Cleanup service worker registration failed', err);
-      });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js").catch((err) => {
+      console.warn("Cleanup service worker registration failed", err);
+    });
   });
 }
